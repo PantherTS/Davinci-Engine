@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Soldier1>
+	<Attributes>
+		<AttributeEntry type="0" name="hp" value="100" />
+		<AttributeEntry type="1" name="name" value="Frank" />
+		<AttributeEntry type="0" name="mp" value="200" />
+		<AttributeEntry type="0" name="xp" value="1000" />
+		<AttributeEntry type="0" name="level" value="2" />
+		<AttributeEntry type="1" name="aitype" value="evil" />
+	</Attributes>
+	<Tags>
+		<TagEntry name="ACTOR" />
+	</Tags>
+	<TextureAtlas image="textures/actors/soldier1.png" width="864" height="864">
+		<TextureAtlasEntry name="standing_e" coords="0 0 96 96"/>
+		<TextureAtlasEntry name="standing_n" coords="96 0 96 96"/>
+		<TextureAtlasEntry name="standing_ne" coords="0 96 96 96 "/>
+		<TextureAtlasEntry name="standing_nw" coords="96 96 96 96"/>
+		<TextureAtlasEntry name="standing_s" coords="192 0 96 96"/>
+		<TextureAtlasEntry name="standing_se" coords="192 96 96 96"/>
+		<TextureAtlasEntry name="standing_sw" coords="288 0 96 96"/>
+		<TextureAtlasEntry name="standing_w" coords="384 0 96 96"/>
+		<TextureAtlasEntry name="walking_e0" coords="288 96 96 96"/>
+		<TextureAtlasEntry name="walking_e1" coords="384 96 96 96"/>
+		<TextureAtlasEntry name="walking_e2" coords="0 192 96 96"/>
+		<TextureAtlasEntry name="walking_e3" coords="96 192 96 96"/>
+		<TextureAtlasEntry name="walking_e4" coords="0 288 96 96"/>
+		<TextureAtlasEntry name="walking_e5" coords="192 192 96 96"/>
+		<TextureAtlasEntry name="walking_e6" coords="96 288 96 96"/>
+		<TextureAtlasEntry name="walking_e7" coords="0 384 96 96"/>
+		<TextureAtlasEntry name="walking_n0" coords="96 384 96 96"/>
+		<TextureAtlasEntry name="walking_n1" coords="288 192 96 96"/>
+		<TextureAtlasEntry name="walking_n2" coords="192 288 96 96"/>
+		<TextureAtlasEntry name="walking_n3" coords="288 288 96 96"/>
+		<TextureAtlasEntry name="walking_n4" coords="192 384 96 96"/>
+		<TextureAtlasEntry name="walking_n5" coords="384 192 96 96"/>
+		<TextureAtlasEntry name="walking_n6" coords="384 288 96 96"/>
+		<TextureAtlasEntry name="walking_n7" coords="288 384 96 96"/>
+		<TextureAtlasEntry name="walking_ne0" coords="384 384 96 96"/>
+		<TextureAtlasEntry name="walking_ne1" coords="480 0 96 96"/>
+		<TextureAtlasEntry name="walking_ne2" coords="480 96 96 96"/>
+		<TextureAtlasEntry name="walking_ne3" coords="576 0 96 96"/>
+		<TextureAtlasEntry name="walking_ne4" coords="480 192 96 96"/>
+		<TextureAtlasEntry name="walking_ne5" coords="576 96 96 96"/>
+		<TextureAtlasEntry name="walking_ne6" coords="672 0 96 96"/>
+		<TextureAtlasEntry name="walking_ne7" coords="576 192 96 96"/>
+		<TextureAtlasEntry name="walking_nw0" coords="768 0 96 96"/>
+		<TextureAtlasEntry name="walking_nw1" coords="672 96 96 96"/>
+		<TextureAtlasEntry name="walking_nw2" coords="480 288 96 96"/>
+		<TextureAtlasEntry name="walking_nw3" coords="480 384 96 96"/>
+		<TextureAtlasEntry name="walking_nw4" coords="768 96 96 96"/>
+		<TextureAtlasEntry name="walking_nw5" coords="672 192 96 96"/>
+		<TextureAtlasEntry name="walking_nw6" coords="576 288 96 96"/>
+		<TextureAtlasEntry name="walking_nw7" coords="672 288 96 96"/>
+		<TextureAtlasEntry name="walking_s0" coords="576 384 96 96"/>
+		<TextureAtlasEntry name="walking_s1" coords="768 192 96 96"/>
+		<TextureAtlasEntry name="walking_s2" coords="768 288 96 96"/>
+		<TextureAtlasEntry name="walking_s3" coords="672 384 96 96"/>
+		<TextureAtlasEntry name="walking_s4" coords="768 384 96 96"/>
+		<TextureAtlasEntry name="walking_s5" coords="0 480 96 96"/>
+		<TextureAtlasEntry name="walking_s6" coords="0 576 96 96"/>
+		<TextureAtlasEntry name="walking_s7" coords="96 480 96 96"/>
+		<TextureAtlasEntry name="walking_se0" coords="96 576 96 96"/>
+		<TextureAtlasEntry name="walking_se1" coords="0 672 96 96"/>
+		<TextureAtlasEntry name="walking_se2" coords="192 480 96 96"/>
+		<TextureAtlasEntry name="walking_se3" coords="192 576 96 96"/>
+		<TextureAtlasEntry name="walking_se4" coords="96 672 96 96"/>
+		<TextureAtlasEntry name="walking_se5" coords="0 768 96 96"/>
+		<TextureAtlasEntry name="walking_se6" coords="288 480 96 96"/>
+		<TextureAtlasEntry name="walking_se7" coords="192 672 96 96"/>
+		<TextureAtlasEntry name="walking_sw0" coords="96 768 96 96"/>
+		<TextureAtlasEntry name="walking_sw1" coords="384 480 96 96"/>
+		<TextureAtlasEntry name="walking_sw2" coords="288 576 96 96"/>
+		<TextureAtlasEntry name="walking_sw3" coords="192 768 96 96"/>
+		<TextureAtlasEntry name="walking_sw4" coords="480 480 96 96"/>
+		<TextureAtlasEntry name="walking_sw5" coords="384 576 96 96"/>
+		<TextureAtlasEntry name="walking_sw6" coords="288 672 96 96"/>
+		<TextureAtlasEntry name="walking_sw7" coords="288 768 96 96"/>
+		<TextureAtlasEntry name="walking_w0" coords="576 480 96 96"/>
+		<TextureAtlasEntry name="walking_w1" coords="480 576 96 96"/>
+		<TextureAtlasEntry name="walking_w2" coords="384 672 96 96"/>
+		<TextureAtlasEntry name="walking_w3" coords="576 576 96 96"/>
+		<TextureAtlasEntry name="walking_w4" coords="480 672 96 96"/>
+		<TextureAtlasEntry name="walking_w5" coords="384 768 96 96"/>
+		<TextureAtlasEntry name="walking_w6" coords="672 480 96 96"/>
+		<TextureAtlasEntry name="walking_w7" coords="672 576 96 96"/>
+	</TextureAtlas>
+	<Animations filter="0" width="96" height="96">
+		<AnimationEntry name="default" value="standing_s" />
+		<AnimationEntry name="standing_e" start="0" end="0" speed="0" />
+		<AnimationEntry name="standing_n" start="0" end="0" speed="0" />
+		<AnimationEntry name="standing_ne" start="0" end="0" speed="0" />
+		<AnimationEntry name="standing_nw" start="0" end="0" speed="0" />
+		<AnimationEntry name="standing_s" start="0" end="0" speed="0" />
+		<AnimationEntry name="standing_se" start="0" end="0" speed="0" />
+		<AnimationEntry name="standing_sw" start="0" end="0" speed="0" />
+		<AnimationEntry name="standing_w" start="0" end="0" speed="0" />
+		<AnimationEntry name="walking_e" start="0" end="7" speed="1" />
+		<AnimationEntry name="walking_n" start="0" end="7" speed="1" />
+		<AnimationEntry name="walking_ne" start="0" end="7" speed="1" />
+		<AnimationEntry name="walking_nw" start="0" end="7" speed="1" />
+		<AnimationEntry name="walking_s" start="0" end="7" speed="1" />
+		<AnimationEntry name="walking_se" start="0" end="7" speed="1" />
+		<AnimationEntry name="walking_sw" start="0" end="7" speed="1" />
+		<AnimationEntry name="walking_w" start="0" end="7" speed="1" />
+	</Animations>
+	<Inputs>
+		<InputEntry name="MouseClickLeftThis" action="select" />
+	</Inputs>
+	<Collision type="0" width="28" height="58" offsetx="0" offsety="0"/>
+</Soldier1>

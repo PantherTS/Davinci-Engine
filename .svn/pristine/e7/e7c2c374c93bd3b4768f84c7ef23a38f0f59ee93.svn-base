@@ -1,0 +1,16 @@
+#include "UIControl.h"
+
+using namespace DavinciEngine;
+
+UIControl::UIControl()
+{
+}
+
+UIControl::~UIControl()
+{
+}
+
+void UIControl::InputChecks()
+{
+	// Virtual function
+}

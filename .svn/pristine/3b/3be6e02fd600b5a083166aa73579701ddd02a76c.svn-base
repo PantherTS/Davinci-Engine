@@ -1,0 +1,155 @@
+local engine = DavinciEngine.Davinci:Engine_GetInstance()
+engine:SetGameMode("2")
+engine:LoadActor("Player","512","350")
+engine:LoadActor("Soldier1","100","100")
+engine:LoadActor("Soldier1","100","500")
+engine:LoadActor("Soldier1","100","300")
+
+-----------------------------------------
+-- Main Menu Functions
+-----------------------------------------
+--[[function btn_clicked_new_game(e)
+	local we 		= CEGUI.toWindowEventArgs(e)
+	local engine	= DavinciEngine.Davinci:Engine_GetInstance()
+	--Destroy the Main Menu windows and start the game.
+	--CEGUI.WindowManager:getSingleton():destroyWindow("MainMenu")
+	CEGUI.WindowManager:getSingleton():getWindow("Background"):hide()
+	--Set the engine's game mode to "in-game".
+	engine:SetGameMode("2")
+	--Testing Sprite Loading Here
+	--Going to change this to trigger new game menus (player creation etc)
+	engine:LoadActor("Player","512","350")
+	engine:LoadActor("Soldier1","100","100")
+	engine:LoadActor("Soldier1","100","500")
+	engine:LoadActor("Soldier1","100","300")
+	--engine:Objects_LoadActor("black_mage","500","200","Harmless")
+	--engine:Objects_LoadActor("black_mage","500","200","Wrong")
+end
+--
+function btn_clicked_load_game(e)
+	local we 		= CEGUI.toWindowEventArgs(e)
+	local winman    = CEGUI.WindowManager:getSingleton()
+	winman:getWindow("MainMenu"):hide()
+	winman:getWindow("LoadGame"):show()
+end
+--
+function btn_clicked_settings(e)
+	local we 		= CEGUI.toWindowEventArgs(e)
+	local winman    = CEGUI.WindowManager:getSingleton()
+	winman:getWindow("MainMenu"):hide()
+	winman:getWindow("Settings"):show()
+end
+--
+function btn_clicked_quit_game(e)
+	local we = CEGUI.toWindowEventArgs(e)
+	DavinciEngine.Davinci:Engine_GetInstance():SetGameMode("0")
+end
+--
+-----------------------------------------
+-- Settings Menus Functions
+-----------------------------------------
+function btn_clicked_video_settings(e)
+	local we 		= CEGUI.toWindowEventArgs(e)
+	local winman    = CEGUI.WindowManager:getSingleton()
+	winman:getWindow("Settings"):hide()
+	winman:getWindow("VideoSettings"):show()
+	if DavinciEngine.Davinci:Engine_GetInstance():IsFullscreen() == true then
+		winman:getWindow("VideoSettings"):getChild("VideoSettings/FullscreenMode"):hide()	
+		winman:getWindow("VideoSettings"):getChild("VideoSettings/WindowedMode"):show()
+	else
+		winman:getWindow("VideoSettings"):getChild("VideoSettings/FullscreenMode"):show()	
+		winman:getWindow("VideoSettings"):getChild("VideoSettings/WindowedMode"):hide()	
+	end
+end
+--
+function btn_clicked_audio_settings(e)
+	local we 		= CEGUI.toWindowEventArgs(e)
+	local winman    = CEGUI.WindowManager:getSingleton()
+	winman:getWindow("Settings"):hide()
+	winman:getWindow("AudioSettings"):show()
+end
+--
+function btn_clicked_control_settings(e)
+	local we 		= CEGUI.toWindowEventArgs(e)
+	local winman    = CEGUI.WindowManager:getSingleton()
+	winman:getWindow("Settings"):hide()
+	winman:getWindow("ControlsSettings"):show()
+end
+function btn_clicked_fullscreen(e)
+	local we = CEGUI.toWindowEventArgs(e)
+	DavinciEngine.Davinci:Engine_GetInstance():SetFullscreen(true);
+	btn_clicked_video_settings(nil)
+end
+--
+function btn_clicked_windowed(e)
+	local we = CEGUI.toWindowEventArgs(e)
+	DavinciEngine.Davinci:Engine_GetInstance():SetFullscreen(false);
+	btn_clicked_video_settings(nil)
+end
+--
+-----------------------------------------
+-- Back Button Functions
+-----------------------------------------
+function btn_clicked_mainback(e)
+	local we 		= CEGUI.toWindowEventArgs(e)
+	local winman    = CEGUI.WindowManager:getSingleton()
+	winman:getWindow("Settings"):hide()
+	winman:getWindow("LoadGame"):hide()
+	winman:getWindow("MainMenu"):show()
+end
+--
+function btn_clicked_settingsback(e)
+	local we 		= CEGUI.toWindowEventArgs(e)
+	local winman    = CEGUI.WindowManager:getSingleton()
+	winman:getWindow("VideoSettings"):hide()
+	winman:getWindow("ControlsSettings"):hide()
+	winman:getWindow("AudioSettings"):hide()
+	winman:getWindow("Settings"):show()
+end
+--
+function btn_clicked_vidsettingsback(e)
+	local we 		= CEGUI.toWindowEventArgs(e)
+	local winman    = CEGUI.WindowManager:getSingleton()
+	winman:getWindow("VideoSettings/Resolution"):hide()
+	winman:getWindow("VideoSettings"):show()	
+end
+--
+-----------------------------------------
+-- Resolution Settings Menu Functions
+-----------------------------------------
+function btn_clicked_resolution(e)
+	local we = CEGUI.toWindowEventArgs(e)
+	local winman    = CEGUI.WindowManager:getSingleton()
+	winman:getWindow("VideoSettings"):hide()
+	winman:getWindow("VideoSettings/Resolution"):show()
+end
+--
+function btn_clicked_800x600(e)
+	local we = CEGUI.toWindowEventArgs(e)
+	DavinciEngine.Davinci:Engine_GetInstance():SetResolution("800", "600");
+end
+--
+function btn_clicked_1024x768(e)
+	local we = CEGUI.toWindowEventArgs(e)
+	DavinciEngine.Davinci:Engine_GetInstance():SetResolution("1024", "768");
+end
+--
+-----------------------------------------
+-- Script Entry Point
+-----------------------------------------
+local logger = CEGUI.Logger:getSingleton()
+logger:logEvent(">>> MainMenu Init script says hello")
+--
+local system    = CEGUI.System:getSingleton()
+local fontman   = CEGUI.FontManager:getSingleton()
+local schememan = CEGUI.SchemeManager:getSingleton()
+local winman    = CEGUI.WindowManager:getSingleton()
+local imageman	= CEGUI.ImagesetManager:getSingleton()
+--
+--Load the Main Menu imageset and layout file
+imageman:create("MainMenu.imageset")
+local sheet = winman:loadWindowLayout("MainMenu.layout")
+system:getGUISheet():addChildWindow(sheet)
+--
+logger:logEvent("<<< MainMenu Init script says goodbye")
+]]--

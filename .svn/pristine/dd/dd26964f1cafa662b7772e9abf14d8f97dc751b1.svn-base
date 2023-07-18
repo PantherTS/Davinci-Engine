@@ -1,0 +1,148 @@
+#include "Graphic.h"
+#include "Framework.h"
+#include "TextureAsset.h"
+
+#include "gl/glew.h"
+
+using namespace DavinciEngine;
+
+OpenGL *OpenGL::m_pOpenGL = nullptr;
+
+OpenGL::OpenGL()
+{
+	m_bBGReset = true;
+}
+
+OpenGL *OpenGL::GetInstance(){
+	if(!m_pOpenGL){
+		m_pOpenGL = new OpenGL();
+	}
+	return m_pOpenGL;
+}
+
+OpenGL::~OpenGL()
+{
+}
+
+void OpenGL::BindTexture(TextureAsset *textureAsset)
+{
+	if (textureAsset != nullptr)
+	{
+		if (m_pOpenGL->lastTexID != textureAsset->texID)
+		{
+			glBindTexture(GL_TEXTURE_2D, textureAsset->texID);
+			m_pOpenGL->lastTexID = textureAsset->texID;
+		}
+	}
+	else
+	{
+		if (m_pOpenGL->lastTexID != 0)
+		{
+			glBindTexture(GL_TEXTURE_2D, 0);
+			m_pOpenGL->lastTexID = 0;
+		}
+	}
+}
+
+void OpenGL::BeginFrame()
+{
+    if (m_bBGReset)
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
+        
+	glLoadIdentity();
+	glScalef(m_vec2ResolutionScale.x, m_vec2ResolutionScale.y, 0.0f);
+	glTranslatef(m_vec2ScreenCenter.x, m_vec2ScreenCenter.y, 0.0f);
+}
+
+void OpenGL::EndFrame()
+{
+}
+
+void OpenGL::ShowBuffer(SDL_Window *window)
+{
+	SDL_GL_SwapWindow(window);
+}
+
+void OpenGL::Translate(float x, float y, float z)
+{
+	glTranslatef(x,y,z);
+}
+
+void OpenGL::Translate(const Vec2D &pos)
+{
+	glTranslatef(pos.x, pos.y, 0.0f);
+}
+
+void OpenGL::Scale(const Vec2D &scale)
+{
+	glScalef(scale.x, scale.y, 1.0f);
+}
+
+void OpenGL::PushMatrix()
+{
+	glPushMatrix();
+}
+
+void OpenGL::PopMatrix()
+{
+	glPopMatrix();
+}
+
+void OpenGL::Rotate(float r, float ax, float ay, float az)
+{
+	glRotatef(r, ax, ay, az);
+}
+
+void OpenGL::SetColor(float r, float g, float b)
+{
+	glColor3f(r, g, b);
+}
+
+void OpenGL::SetBlend(BlendType blend)
+{
+	if (blend != m_pOpenGL->currentBlend)
+	{
+		switch (blend)
+		{
+		case BLEND_ALPHA:
+			glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+			break;
+		case BLEND_ADDITIVE:
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+			break;
+		case BLEND_MULTIPLY:
+			glBlendFunc(GL_ZERO, GL_SRC_COLOR);
+			break;
+		}
+		m_pOpenGL->currentBlend = blend;
+	}
+}
+
+void OpenGL::MakeQuad(float width, float height, const Vec2D &textureOffset, const Vec2D &textureScale, const Vec2D &position)
+{
+	float halfWidth = width*0.5f;
+	float halfHeight = height*0.5f;
+
+	glBegin(GL_QUADS);
+	// UL
+	glTexCoord2f(textureOffset.x, textureOffset.y);
+	glVertex3f(-halfWidth + position.x, -halfHeight + position.y, 0.0f);
+
+	//UR
+	glTexCoord2f(textureOffset.x + textureScale.x, textureOffset.y);
+	glVertex3f(halfWidth + position.x, -halfHeight + position.y, 0.0f);
+
+	//LR
+	glTexCoord2f(textureOffset.x + textureScale.x, textureOffset.y + textureScale.y);
+	glVertex3f(halfWidth + position.x, halfHeight + position.y, 0.0f);
+
+	//LL
+	glTexCoord2f(textureOffset.x, textureOffset.y + textureScale.y);
+	glVertex3f(-halfWidth + position.x, halfHeight + position.y, 0.0f);
+	glEnd();
+}
+
+Vec2D OpenGL::GetScreenCenter()
+{
+	return m_vec2ScreenCenter;
+}

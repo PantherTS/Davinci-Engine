@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{e9db73c2-d496-4403-9362-83dbb8dfaa34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Input">
+      <UniqueIdentifier>{09c1dba5-b725-46a7-b08e-6ee3e679e2b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Audio">
+      <UniqueIdentifier>{04128ec4-125d-4901-aa51-eb3ebb591ea4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Objects">
+      <UniqueIdentifier>{0fd78c06-e60d-49ba-b1c2-3963a66593ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{84b7acfd-4aa9-4792-82b3-09129b5a287c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Input">
+      <UniqueIdentifier>{331076f2-6fa2-4971-9475-42c7a3e60a53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Audio">
+      <UniqueIdentifier>{32a43168-5a3e-4b57-b828-c2d77d868329}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Objects">
+      <UniqueIdentifier>{9a7d4570-094a-49c0-8a90-42a73007f3ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Engine\AI">
+      <UniqueIdentifier>{2441d1c8-8a4b-4a76-8d2e-f6e8758adb28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\AI">
+      <UniqueIdentifier>{85582b3b-dbf2-4b6f-98fb-ac44838cbd3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\System">
+      <UniqueIdentifier>{904bda41-10e7-4d1e-8e2c-9f02132f0334}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\System\XMLSystem">
+      <UniqueIdentifier>{cbabd7bc-6034-451f-93e9-9c6ceffc182c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\System">
+      <UniqueIdentifier>{c5a84b91-9e69-4ad9-b5db-e28f6576bcb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\System\XMLSystem">
+      <UniqueIdentifier>{d51271e6-dbc4-4077-8c6d-d1705dd3558a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Assets">
+      <UniqueIdentifier>{7305e419-6e56-4bf1-8fb9-8b28d2ea6665}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Assets">
+      <UniqueIdentifier>{30071c00-df89-485c-bed1-84f3e1333ff4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\World">
+      <UniqueIdentifier>{b250db7d-f597-424c-ad83-407ce0bbdc7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\World">
+      <UniqueIdentifier>{d0752583-b8bf-4a06-ac96-73c29eefede4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Collision">
+      <UniqueIdentifier>{3dbd7bbf-e201-4f8c-a1e7-773c537a5c15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Collision">
+      <UniqueIdentifier>{d755d882-6c96-4f98-b70f-1e45596c0663}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics">
+      <UniqueIdentifier>{8264c064-6718-4743-84a5-559b4cd8bc0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics">
+      <UniqueIdentifier>{4ae34872-8003-4ca7-b7fe-e0064b00bd94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\System\Types">
+      <UniqueIdentifier>{7f54d389-616a-40e8-bbe0-2a95ec5c7f3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\System\Types">
+      <UniqueIdentifier>{3450fda3-2527-4e57-97f8-ac77f87c105b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\System\LUA">
+      <UniqueIdentifier>{5d8ef1ab-ca52-4716-9f49-d17a16377612}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\System\LUA">
+      <UniqueIdentifier>{d211a1f1-0014-45ef-87c0-f394cc8e7927}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\DavinciEngine.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI.cpp">
+      <Filter>Source Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Window.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Timer.cpp">
+      <Filter>Source Files\Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XmlSettings.cpp">
+      <Filter>Source Files\Engine\System\XMLSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sprite.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ModeManager.cpp">
+      <Filter>Source Files\Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utilities.cpp">
+      <Filter>Source Files\Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Object.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LowLevelSystemSDL.cpp">
+      <Filter>Source Files\Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIType.cpp">
+      <Filter>Source Files\Engine\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TXMLWrapper.cpp">
+      <Filter>Source Files\Engine\System\XMLSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input.cpp">
+      <Filter>Source Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework.cpp">
+      <Filter>Source Files\Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Asset.cpp">
+      <Filter>Source Files\Engine\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AssetManager.cpp">
+      <Filter>Source Files\Engine\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenGLWrapper.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Transform.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene.cpp">
+      <Filter>Source Files\Engine\World</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureAsset.cpp">
+      <Filter>Source Files\Engine\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XMLFileNode.cpp">
+      <Filter>Source Files\Engine\System\XMLSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureAtlas.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Attribute.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Collider.cpp">
+      <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Collision.cpp">
+      <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RectangleCollider.cpp">
+      <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CollisionData.cpp">
+      <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteAnimation.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera.cpp">
+      <Filter>Source Files\Engine\World</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vec2D.cpp">
+      <Filter>Source Files\Engine\System\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stb_image.c">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LuaInterface.cpp">
+      <Filter>Source Files\Engine\System\LUA</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LUAModule.cpp">
+      <Filter>Source Files\Engine\System\LUA</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\DavinciEngine.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ModeManager.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GUI.h">
+      <Filter>Header Files\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Window.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Timer.h">
+      <Filter>Header Files\Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\XmlSettings.h">
+      <Filter>Header Files\Engine\System\XMLSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Actor.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Object.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AIType.h">
+      <Filter>Header Files\Engine\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LowLevelSystem.h">
+      <Filter>Header Files\Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TXMLWrapper.h">
+      <Filter>Header Files\Engine\System\XMLSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Graphic.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Asset.h">
+      <Filter>Header Files\Engine\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Input.h">
+      <Filter>Header Files\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Framework.h">
+      <Filter>Header Files\Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextureAsset.h">
+      <Filter>Header Files\Engine\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AssetManager.h">
+      <Filter>Header Files\Engine\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Sprite.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Transform.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Scene.h">
+      <Filter>Header Files\Engine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="include\XMLFileNode.h">
+      <Filter>Header Files\Engine\System\XMLSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextureAtlas.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Attribute.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Collider.h">
+      <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Collision.h">
+      <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RectangleCollider.h">
+      <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CollisionData.h">
+      <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpriteAnimation.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Camera.h">
+      <Filter>Header Files\Engine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Vec2D.h">
+      <Filter>Header Files\Engine\System\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="include\stb_image.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tinyxml2.h">
+      <Filter>Header Files\Engine\System\XMLSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SystemTypes.h">
+      <Filter>Header Files\Engine\System\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FileNode.h">
+      <Filter>Header Files\Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LuaInterface.h">
+      <Filter>Header Files\Engine\System\LUA</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LUAModule.h">
+      <Filter>Header Files\Engine\System\LUA</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tolua++.h">
+      <Filter>Header Files\Engine\System\LUA</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
