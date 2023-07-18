@@ -10,20 +10,24 @@ namespace DavinciEngine{
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/// <summary> A rectangle definition. </summary>
 	////////////////////////////////////////////////////////////////////////////////////////////////////
-	struct Rect
-	{
-		Rect(float lx, float ly, float rx, float ry) noexcept : lx(lx), ly(ly), rx(rx), ry(ry) {}
-		Rect() noexcept : lx(0.0f), ly(0.0f), rx(0.0f), ry(0.0f) {}
+    struct Rect
+    {
+        float lx;
+        float ly;
+        float rx;
+        float ry;
 
-		Rect& operator=(const Rect& other) noexcept {lx=other.lx;ly=other.ly;rx=other.rx;ry=other.ry;}
+        Rect(float lx, float ly, float rx, float ry) noexcept : lx(lx), ly(ly), rx(rx), ry(ry) {}
+        Rect() noexcept : lx(0.0f), ly(0.0f), rx(0.0f), ry(0.0f) {}
 
-		float lx;
-		float ly;
-		float rx;
-		float ry;
+        Rect& operator=(const Rect& other) = delete;
 
-		bool operator==(const Rect& other) const = default;
-	};
+        bool operator==(const Rect& other) const = default;
+
+        Rect(const Rect&) = default;
+        Rect(Rect&&) = default;
+        ~Rect() = default;
+    };
 };
 
 #endif
