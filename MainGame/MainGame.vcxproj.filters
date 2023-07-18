@@ -54,8 +54,14 @@
     <CopyFileToFolders Include="..\DavinciEngine\build\Debug\DavinciEngine_d.lib">
       <Filter>DLLs</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="..\DavinciEngine\build\Release\DavinciEngine.dll" />
-    <CopyFileToFolders Include="..\DavinciEngine\dependencies\lib\SDL2.dll" />
-    <CopyFileToFolders Include="..\DavinciEngine\build\Release\DavinciEngine.lib" />
+    <CopyFileToFolders Include="..\DavinciEngine\build\Release\DavinciEngine.dll">
+      <Filter>DLLs</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\DavinciEngine\build\Release\DavinciEngine.lib">
+      <Filter>DLLs</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\DavinciEngine\dependencies\lib\SDL2.dll">
+      <Filter>DLLs</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>
