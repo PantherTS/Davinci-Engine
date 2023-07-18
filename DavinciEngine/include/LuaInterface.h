@@ -1,6 +1,6 @@
 /*
 ** Lua binding: LuaInterface
-** Generated automatically by tolua++-1.0.93-lua53 on Fri Jan 20 10:17:33 2023.
+** Generated automatically by tolua++-1.0.93-lua53 on Tue Jul 18 05:41:50 2023.
 */
 
 #include "tolua++.h"

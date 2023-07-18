@@ -169,7 +169,7 @@ namespace DavinciEngine{
 		///
 		/// <returns> The default content path.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		char * GetDefaultContentPath() noexcept {return "../";};
+		const char * GetDefaultContentPath() noexcept {return "../";};
 
 		/// <summary> Array holding boolean values for the KeyCode keys </summary>
 		bool m_bKeys[KEY_MAX];

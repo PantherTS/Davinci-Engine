@@ -15,12 +15,14 @@ namespace DavinciEngine{
 		Rect(float lx, float ly, float rx, float ry) noexcept : lx(lx), ly(ly), rx(rx), ry(ry) {}
 		Rect() noexcept : lx(0.0f), ly(0.0f), rx(0.0f), ry(0.0f) {}
 
-		void operator=(const Rect& other) noexcept {lx=other.lx;ly=other.ly;rx=other.rx;ry=other.ry;}
+		Rect& operator=(const Rect& other) noexcept {lx=other.lx;ly=other.ly;rx=other.rx;ry=other.ry;}
 
 		float lx;
 		float ly;
 		float rx;
 		float ry;
+
+		bool operator==(const Rect& other) const = default;
 	};
 };
 

@@ -88,7 +88,8 @@ bool Actor::LoadActor(const char *actorType, float xPos, float yPos)
 		std::string file = actorType;
 		std::transform(file.begin(), file.end(), file.begin(), ::tolower);
 		// Try to load the XML file for the Actor here.
-		if( !pActor->LoadXML("../data/actors/" + file + ".xml") ){
+		std::string xmlPath = "../data/actors/" + file + ".xml";
+		if( !pActor->LoadXML(xmlPath) ){
 			delete pActor;
 			pActor = nullptr;
 			return false;

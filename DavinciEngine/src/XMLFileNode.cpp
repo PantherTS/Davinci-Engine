@@ -1,6 +1,7 @@
 #include "XMLFileNode.h"
 #include <sstream>
 #include "Vec2D.h"
+#include <format>
 
 using namespace DavinciEngine;
 
@@ -42,11 +43,10 @@ void XMLFileNode::Write(const std::string &name, const char *&value)
 	element->SetAttribute(name.c_str(), value);
 }
 
-void XMLFileNode::Write(const std::string &name, const Vec2D &value)
+void XMLFileNode::Write(const std::string& name, const Vec2D& value)
 {
-	std::ostringstream os;
-	os << value.x << " " << value.y;
-	element->SetAttribute(name.c_str(), &os.str());
+	std::string buffer = std::format("{} {}", value.x, value.y);
+	element->SetAttribute(name.c_str(), buffer.c_str());
 }
 
 //void XMLFileNode::Write(const std::string &name, const Color &value)
