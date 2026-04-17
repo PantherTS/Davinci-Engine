@@ -14,12 +14,12 @@ TextureAtlasEntry::TextureAtlasEntry(TextureAtlas *textureAtlas)
 {
 }
 
-int TextureAtlasEntry::GetWidth()
+int TextureAtlasEntry::GetWidth() const
 {
 	return width;
 }
 
-int TextureAtlasEntry::GetHeight()
+int TextureAtlasEntry::GetHeight() const
 {
 	return height;
 }
