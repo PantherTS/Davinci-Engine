@@ -141,29 +141,37 @@ void Sprite::SetSpriteAnimation(SpriteAnimation* animation)
 void Sprite::MoveTo(glm::vec2 targetCoordinate, glm::vec2 currentPosition)
 {
     m_bIsMoving = true;
-    m_vec2Destination = targetCoordinate;
 
-    // Direction = Destination - Start
+    // 1. Calculate half-sizes
+    float halfW = size.x * 0.5f;
+    float halfH = size.y * 0.5f;
+
+    // 2. Clamp the destination so the character doesn't try to walk "past" the walls
+    m_vec2Destination.x = glm::clamp(targetCoordinate.x, halfW, (float)Window::GetInstance()->GetWidth() - halfW);
+    m_vec2Destination.y = glm::clamp(targetCoordinate.y, halfH, (float)Window::GetInstance()->GetHeight() - halfH);
+
+    // 3. Calculate direction toward the NEW (clamped) destination
     m_vec2Direction = m_vec2Destination - currentPosition;
 
     if (glm::length(m_vec2Direction) > 0.0f)
         Normalize(m_vec2Direction);
 }
 
+
 void Sprite::Move(glm::vec2& position)
 {
     if (!m_bIsMoving) return;
 
     float dist = glm::distance(position, m_vec2Destination);
+    const float dt = static_cast<float>(Timer::GetInstance()->GetDeltaTime());
 
-    if (dist < (m_fSpeed * 1.0f))
+    if (dist < 1.0f || dist < (m_fSpeed * dt * 100.0f))
     {
         m_bIsMoving = false;
         position = m_vec2Destination;
     }
     else
     {
-        const float dt = static_cast<float>(Timer::GetInstance()->GetDeltaTime());
         position += m_vec2Direction * m_fSpeed * dt * 100.0f;
 
         float halfW = size.x * 0.5f;
