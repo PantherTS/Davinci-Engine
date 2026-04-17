@@ -24,14 +24,14 @@ int TextureAtlasEntry::GetHeight()
 	return height;
 }
 
-Vec2D TextureAtlasEntry::GetTextureOffset()
+glm::vec2 TextureAtlasEntry::GetTextureOffset()
 {
-	return Vec2D(x/float(textureAtlas->width), y/float(textureAtlas->height));
+	return glm::vec2(x/float(textureAtlas->width), y/float(textureAtlas->height));
 }
 
-Vec2D TextureAtlasEntry::GetTextureScale()
+glm::vec2 TextureAtlasEntry::GetTextureScale()
 {
-	return Vec2D(width/static_cast<float>(textureAtlas->width), height/static_cast<float>(textureAtlas->height));
+	return glm::vec2(width/static_cast<float>(textureAtlas->width), height/static_cast<float>(textureAtlas->height));
 }
 
 void TextureAtlasEntry::Save(FileNode *fileNode)

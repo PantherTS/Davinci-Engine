@@ -1,33 +1,31 @@
-#ifndef CAMERA_H
-#define CAMERA_H
-
+#pragma once
 #include "Transform.h"
 
 namespace DavinciEngine
 {
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/// <summary> Camera class representing the end-user view. </summary>
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	class Camera : public Transform
-	{
-	public:
+    class OrthographicCamera : public Transform {
+    public:
+        glm::mat4 projectionMatrix;
 
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// <summary> Default constructor.</summary>
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		Camera();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="width">Width of camera (usually the width of the window)</param>
+        /// <param name="height">Height of camera (usually the height of the window)</param>
+        OrthographicCamera(float width, float height) {
+            // Create an orthographic projection using GLM
+            projectionMatrix = glm::ortho(0.0f, width, height, 0.0f, -100.0f, 100.0f);
+        }
 
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// <summary> Copy constructor.</summary>
-		///
-		/// <param name="camera"> The camera.</param>
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		Camera(const Camera& camera);
+        // View matrix is the inverse of the camera's world transform
+        glm::mat4 GetViewMatrix() const {
+            // Efficient way to get camera view without manual inversion:
+            // Position is negated, and rotation is applied in reverse order.
+            return glm::inverse(GetModelMatrix());
+        }
 
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// <summary> Applies the matrix.</summary>
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		void ApplyMatrix();
-	};
+        glm::mat4 GetViewProjection() const {
+            return projectionMatrix * GetViewMatrix();
+        }
+    };
 }
-#endif

@@ -163,7 +163,7 @@ namespace DavinciEngine{
 			///
 			/// <param name="camera"> [in,out] If non-null, the camera.</param>
 			////////////////////////////////////////////////////////////////////////////////////////////////////
-			void AddCamera(Camera *camera);
+			void AddCamera(OrthographicCamera* camera);
 
 			////////////////////////////////////////////////////////////////////////////////////////////////////
 			/// <summary> Gets a camera by index.</summary>
@@ -172,7 +172,7 @@ namespace DavinciEngine{
 			///
 			/// <returns> null if it fails, else the camera.</returns>
 			////////////////////////////////////////////////////////////////////////////////////////////////////
-			const Camera *GetCamera(int cameraIndex=0);
+			const OrthographicCamera* GetCamera(int cameraIndex=0);
 			
 
 			/// <summary> true if object is visible </summary>
@@ -230,10 +230,13 @@ namespace DavinciEngine{
 			static std::map<std::string,Object*> toRemove;
 
 			/// <summary> Storage container for the cameras present in the scene. </summary>
-			static std::list<Camera*> cameras;
+			static std::list<OrthographicCamera*> cameras;
 			
 			/// <summary> The storage map of entities sorted by tag </summary>
 			static std::map<std::string, std::list<Object*> > tagMap;
+
+			/// <summary> The storage list of UI controls present in the scene. </summary>
+			static std::list<UIControl*> UIControls;
 		};
 };
 #endif

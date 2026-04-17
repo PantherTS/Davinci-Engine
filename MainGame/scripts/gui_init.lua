@@ -1,0 +1,16 @@
+--local logger = CEGUI.Logger:getSingleton()
+--logger:logEvent(">>> GUI Init script says hello")
+--
+--local system    = CEGUI.System:getSingleton()
+--local fontman   = CEGUI.FontManager:getSingleton()
+--local schememan = CEGUI.SchemeManager:getSingleton()
+--local winman    = CEGUI.WindowManager:getSingleton()
+--local imageman	= CEGUI.ImagesetManager:getSingleton()
+--
+--schememan:create("TaharezLook.scheme", "schemes" )
+--fontman:create	("DejaVuSans-8.font",  "fonts"   )
+--
+--local root = winman:loadWindowLayout("Root.layout")
+--system:setGUISheet(root)
+--
+--logger:logEvent("<<< GUI Init script says goodbye")

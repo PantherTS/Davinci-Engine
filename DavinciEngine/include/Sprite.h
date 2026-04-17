@@ -2,10 +2,10 @@
 #define SPRITE2_H
 
 #include "TextureAsset.h"
-#include "Graphic.h"
-#include "Vec2D.h"
+#include "SpriteGraphic.h"
+#include "glm/glm.hpp"
 
-namespace DavinciEngine{
+namespace DavinciEngine {
 
 	class Object;
 	class SpriteAnimation;
@@ -13,13 +13,13 @@ namespace DavinciEngine{
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/// <summary> Values that represent Direction. </summary>
 	////////////////////////////////////////////////////////////////////////////////////////////////////
-	enum Direction{INVALID_DIR=-1,NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST};
+	enum Direction { INVALID_DIR = -1, NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST };
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/// <summary> Sprite Class represents any object on-screen that has the ability
 	/// 		  to move. </summary>
 	////////////////////////////////////////////////////////////////////////////////////////////////////
-	class Sprite : public Graphic {
+	class Sprite : public SpriteGraphic {
 
 	public:
 
@@ -30,7 +30,7 @@ namespace DavinciEngine{
 		/// <param name="width">    (optional) the width.</param>
 		/// <param name="height">   (optional) the height.</param>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		Sprite(const std::string &filename, float width=-1, float height=-1);
+		Sprite(const std::string& filename, float width = -1, float height = -1);
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Constructor.</summary>
@@ -40,14 +40,14 @@ namespace DavinciEngine{
 		/// <param name="width">    (optional) the width.</param>
 		/// <param name="height">   (optional) the height.</param>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		Sprite(const std::string &filename, FilterType filter, float width=-1, float height=-1);
+		Sprite(const std::string& filename, FilterType filter, float width = -1, float height = -1);
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Copy constructor.</summary>
 		///
 		/// <param name="other"> The other.</param>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		Sprite(const Sprite &other);
+		Sprite(const Sprite& other);
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Default constructor.</summary>
@@ -59,15 +59,15 @@ namespace DavinciEngine{
 		///
 		/// <param name="object"> [in,out] If non-null, the object.</param>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		void Render(Object *object);
+		void Render(const glm::mat4& vp, const glm::mat4& model) override;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Gets the Sprite's texture's width and height and assigns the
 		/// 		  appropriate pointers.</summary>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		const Vec2D GetWidthHeight() override;
+		glm::vec2 GetSize() override;
 
-		void SetSpriteAnimation(SpriteAnimation *animation);
+		void SetSpriteAnimation(SpriteAnimation* animation);
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Initiates the movement routine for the Sprite. The Sprite is instructed
@@ -76,7 +76,7 @@ namespace DavinciEngine{
 		/// <param name="coordinate"> The coordinate.</param>
 		/// <param name="position">   The position.</param>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		void MoveTo(Vec2D coordinate, Vec2D position);
+		void MoveTo(glm::vec2 coordinate, glm::vec2 position);
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> The movement routine that is called for each frame if an object
@@ -86,22 +86,12 @@ namespace DavinciEngine{
 		///
 		/// <param name="position"> [in,out] The position.</param>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		void Move(Vec2D &position);
+		void Move(glm::vec2& position);
+
+		unsigned int GetTextureID() const override { return texture->GetTextureID(); }
 
 		/// <summary> The texture </summary>
-		TextureAsset *texture;
-
-		/// <summary> Height and width of the sprite </summary>
-		float m_fWidth, m_fHeight;
-
-		/// <summary> The texture offset </summary>
-		Vec2D textureOffset;
-
-		/// <summary> The texture scale </summary>
-		Vec2D textureScale;
-
-		/// <summary> The blend type being used </summary>
-		BlendType blend;
+		TextureAsset* texture;
 
 		/// <summary> true if sprite is moving </summary>
 		bool m_bIsMoving;
@@ -138,16 +128,16 @@ namespace DavinciEngine{
 		///
 		/// <param name="v"> [in,out] The direction vector.</param>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		void Normalize(Vec2D &v);
+		void Normalize(glm::vec2& v);
 
 		/// <summary> The direction to move </summary>
-		Vec2D m_vec2Direction;
+		glm::vec2 m_vec2Direction;
 
 		/// <summary> The destination to move to </summary>
-		Vec2D m_vec2Destination;
+		glm::vec2 m_vec2Destination;
 
 		/// <summary> A pointer to the SpriteAnimation object if the Sprite has one </summary>
-		SpriteAnimation *m_pSpriteAnimation;
+		SpriteAnimation* m_pSpriteAnimation;
 	};
 };
 #endif

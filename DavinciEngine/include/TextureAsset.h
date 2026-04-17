@@ -41,6 +41,8 @@ namespace DavinciEngine{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		void Unload();
 
+		unsigned int GetTextureID() const { return m_textureID; }
+
 		/// <summary> The filter being used on the texture </summary>
 		FilterType filter;
 
@@ -51,7 +53,7 @@ namespace DavinciEngine{
 		unsigned int width, height;
 
 		/// <summary> Identifier for the texture in video memory </summary>
-		unsigned int texID;
+		unsigned int m_textureID;
 	};
 }
 

@@ -19,6 +19,8 @@ namespace DavinciEngine {
 		/// <summary> Default constructor.</summary>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		~Button();
+
+		void Render(const glm::mat4& projection) override;
 		
 		void Update() override;
 

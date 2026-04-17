@@ -1,21 +1,20 @@
 #include "Window.h"
 #include "Graphic.h"
 #include "XmlSettings.h"
+#include "glad/gl.h"
 #include <memory>
 
 using namespace DavinciEngine;
 
 Window* Window::m_pWindow = nullptr;
 
-Window::Window(const std::string &title,int width, int height, int bpp, bool fullscreen):
-m_sTitle(title),m_iWidth(width),m_iHeight(height),m_iBpp(bpp),m_bFullscreen(fullscreen),m_iFlags(SDL_WINDOW_OPENGL)
-,m_pScreen(nullptr),m_GLContext(nullptr)
-{
-}
+Window::Window(const std::string& title, int width, int height, int bpp, bool fullscreen) :
+	m_sTitle(title), m_iWidth(width), m_iHeight(height), m_iBpp(bpp), m_bFullscreen(fullscreen), m_iFlags(SDL_WINDOW_OPENGL)
+	, m_pScreen(nullptr), m_GLContext(nullptr)
+{}
 
 Window::~Window()
-{
-}
+{}
 
 void Window::Destroy()
 {
@@ -24,7 +23,7 @@ void Window::Destroy()
 	SDL_Quit();
 }
 
-Window *Window::NewWindow(const std::string &title, int width, int height, int bpp, bool fullscreen)
+Window* Window::NewWindow(const std::string& title, int width, int height, int bpp, bool fullscreen)
 {
 	if (!m_pWindow) {
 		m_pWindow = new Window(title, width, height, bpp, fullscreen);
@@ -38,7 +37,7 @@ Window *Window::NewWindow(const std::string &title, int width, int height, int b
 			return nullptr;
 		}
 	}
-	
+
 	return m_pWindow;
 }
 
@@ -50,9 +49,9 @@ Window* Window::GetInstance()
 	return m_pWindow;
 }
 
-bool Window::SDLInit(){
-	if( SDL_Init( SDL_INIT_VIDEO ) != 0 ) 
-	{		
+bool Window::SDLInit() {
+	if (SDL_Init(SDL_INIT_VIDEO) == false)
+	{
 		Error("SDL could not be intialized! SDL Error: %s", SDL_GetError());
 		return false;
 	}
@@ -62,10 +61,10 @@ bool Window::SDLInit(){
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
 	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 5);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 	if (m_bFullscreen)
@@ -74,7 +73,7 @@ bool Window::SDLInit(){
 	}
 
 	// Create the window
-	m_pScreen = SDL_CreateWindow( m_sTitle.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_iWidth, m_iHeight, m_iFlags );
+	m_pScreen = SDL_CreateWindow(m_sTitle.c_str(), m_iWidth, m_iHeight, m_iFlags);
 
 	if (m_pScreen == nullptr)
 	{
@@ -92,75 +91,67 @@ bool Window::SDLInit(){
 	}
 
 	// Activate Vsync - Will probably make this a menu setting later.
-	if (SDL_GL_SetSwapInterval(1) < 0)
+	if (SDL_GL_SetSwapInterval(1) == false)
 	{
 		Warning("Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 	}
 
 	// Enable the mouse cursor
-	SDL_ShowCursor(SDL_ENABLE);
+	SDL_ShowCursor();
 
 	return true;
 }
 
-bool Window::OGLInit(){
-
-	GLenum glewError = GL_NO_ERROR;
-
-	// Initialize GLEW
-	glewExperimental = GL_TRUE;
-	glewError = glewInit();
-	if (glewError != GLEW_OK)
+bool Window::OGLInit()
+{
+	// Initialize GLAD
+	if (!gladLoadGL((GLADloadfunc)SDL_GL_GetProcAddress))
 	{
-		// GLEW failed!
-		Error("GLEW failed to initialize! Error: %s", glewGetErrorString(glewError));
+		Error("Failed to initialize GLAD");
 		return false;
 	}
 
+	// Set viewport
+	glViewport(0, 0, m_iWidth, m_iHeight);
+
+	// Enable blending (still valid)
 	glEnable(GL_BLEND);
-	glDisable(GL_LIGHTING);
-	glEnable(GL_TEXTURE_2D);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	// Optional: enable backface culling (modern way)
+	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
-	//glShadeModel(GL_SMOOTH);	
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClearDepth(1.0f);
+
+	// Depth (disabled for 2D, fine for now)
 	glDisable(GL_DEPTH_TEST);
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	// Clear color
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-	GLint viewPort[4];
-	glGetIntegerv(GL_VIEWPORT, viewPort);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	//glOrtho(0.0f, m_iWidth, m_iHeight, 0.0f, -1.0f, 1.0f);
-	glOrtho(0.0f, m_iWidth, 0.0f, m_iHeight, -1.0f, 1.0f);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	//glScalef(1.0, -1.0, 1.0);
+	// Clear once
+	glClear(GL_COLOR_BUFFER_BIT);
 
 	// Set the resolution scale for the current window
-	SetWindowScale(Vec2D::one);
+	SetWindowScale(glm::vec2(1.0f, 1.0f));
 
 	// Set the window center coordinates for the current window
-	SetWindowCenter(Vec2D(static_cast<float>(m_iWidth) / 2.0f, static_cast<float>(m_iHeight) / 2.0f));
-	
+	SetWindowCenter(glm::vec2(static_cast<float>(m_iWidth) / 2.0f, static_cast<float>(m_iHeight) / 2.0f));
+
 	return true;
 }
 
-void Window::SetWindowCenter(const Vec2D center)
+void Window::SetWindowCenter(const glm::vec2 center)
 {
 	m_vec2WindowCenter = center;
 }
 
-void Window::SetWindowScale(const Vec2D scale)
+void Window::SetWindowScale(const glm::vec2 scale)
 {
 	m_vec2ResolutionScale = scale;
 }
 
 void Window::SetSize(int width, int height, bool fullscreen)
-{	
+{
 	m_iHeight = height;
 	m_iWidth = width;
 	m_bFullscreen = fullscreen;

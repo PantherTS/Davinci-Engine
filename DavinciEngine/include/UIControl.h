@@ -3,7 +3,7 @@
 
 #include "Transform.h"
 #include "Input.h"
-#include "Vec2D.h"
+#include "glm/glm.hpp"
 
 #include <map>
 
@@ -22,7 +22,7 @@ namespace DavinciEngine {
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Renders this UI Object.</summary>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		void Render();
+		virtual void Render(const glm::mat4& projection) = 0;
 
 	protected:
 		~UIControl();
@@ -53,7 +53,7 @@ namespace DavinciEngine {
 	private:
 		Graphic* m_pGraphic;
 
-		Vec2D position;
+		glm::vec2 position;
 
 		bool m_bIsEnabled;
 	};

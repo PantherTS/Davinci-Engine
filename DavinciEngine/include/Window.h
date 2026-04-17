@@ -3,8 +3,8 @@
 
 #include <string>
 #include <list>
-#include <SDL/SDL.h>
-#include "Vec2D.h"
+#include "SDL3/SDL.h"
+#include "glm/glm.hpp"
 
 namespace DavinciEngine{
 
@@ -73,20 +73,20 @@ namespace DavinciEngine{
 		///
 		/// <param name="center"> The XY coordinates of the center of the window </param>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		void SetWindowCenter(const Vec2D center);
+		void SetWindowCenter(const glm::vec2 center);
 
 		/// <summary> Retrieve the coordinates for the center of the current window </summary>
-		Vec2D& GetWindowCenter() { return m_vec2WindowCenter; }
+		glm::vec2& GetWindowCenter() { return m_vec2WindowCenter; }
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Sets the scale for the current window </summary>
 		///
 		/// <param name="scale"> The scaling to apply to both the X and Y axes </param>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		void SetWindowScale(const Vec2D scale);
+		void SetWindowScale(const glm::vec2 scale);
 
 		/// <summary> Retrieve the current window scaling on the X and Y axes </summary>
-		Vec2D GetWindowScale() { return m_vec2ResolutionScale; }
+		glm::vec2 GetWindowScale() { return m_vec2ResolutionScale; }
 
 		/// <summary> The SDL surface inside the window </summary>
 		SDL_Window* m_pScreen;
@@ -149,10 +149,10 @@ namespace DavinciEngine{
 		//static std::list<Window*> m_Windows;
 
 		/// <summary> The resolution scale </summary>
-		Vec2D m_vec2ResolutionScale;
+		glm::vec2 m_vec2ResolutionScale;
 
 		/// <summary> The screen center coordinates </summary>
-		Vec2D m_vec2WindowCenter;
+		glm::vec2 m_vec2WindowCenter;
 
 	};
 }

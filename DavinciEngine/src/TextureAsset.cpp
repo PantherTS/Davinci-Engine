@@ -1,13 +1,13 @@
 #include "TextureAsset.h"
-#include "GL/glew.h"
+#include "glad/gl.h"
 #include "Framework.h"
 #include <string>
-
+#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
 using namespace DavinciEngine;
 
-TextureAsset::TextureAsset() : Asset(ASSET_TEXTURE)
+TextureAsset::TextureAsset() : Asset(ASSET_TEXTURE), filter(FILTER_LINEAR), repeatX(false), repeatY(false), width(0), height(0), m_textureID(0)
 {
 }
 
@@ -17,15 +17,15 @@ TextureAsset::~TextureAsset()
 
 void TextureAsset::Load(const std::string &filename, FilterType filter, bool repeatX, bool repeatY)
 {
-	filter = filter;
-	repeatX = repeatX;
-	repeatY = repeatY;
+	this->filter = filter;
+	this->repeatX = repeatX;
+	this->repeatY = repeatY;
 	m_sFilename = filename;
 	std::string cPath = Framework::GetInstance()->GetDefaultContentPath();
 	m_sFilename = m_sFilename.replace(0,cPath.length(),"");
 
-	glGenTextures(1, &texID);
-	glBindTexture(GL_TEXTURE_2D, texID);
+	glGenTextures(1, &m_textureID);
+	glBindTexture(GL_TEXTURE_2D, m_textureID);
 
 	glEnable(GL_TEXTURE_2D);
 
@@ -33,7 +33,7 @@ void TextureAsset::Load(const std::string &filename, FilterType filter, bool rep
 	unsigned int glMagFilter = GL_NEAREST;
 	unsigned int glMinFilter = GL_NEAREST;
 
-	if (filter == FILTER_LINEAR)
+	if (this->filter == FILTER_LINEAR)
 	{
 		glMagFilter = GL_LINEAR;
 		glMinFilter = GL_LINEAR_MIPMAP_LINEAR;
@@ -42,8 +42,8 @@ void TextureAsset::Load(const std::string &filename, FilterType filter, bool rep
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, glMagFilter);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, glMinFilter);
 
-	unsigned int glRepeatX = repeatX?GL_REPEAT:GL_CLAMP;
-	unsigned int glRepeatY = repeatY?GL_REPEAT:GL_CLAMP;
+	unsigned int glRepeatX = repeatX?GL_REPEAT:GL_CLAMP_TO_EDGE;
+	unsigned int glRepeatY = repeatY?GL_REPEAT:GL_CLAMP_TO_EDGE;
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, glRepeatX);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, glRepeatY);
@@ -56,18 +56,12 @@ void TextureAsset::Load(const std::string &filename, FilterType filter, bool rep
 		width = (unsigned int)w;
 		height = (unsigned int)h;
 
-		// mipmaps: OpenGL 1.4 version
-		//glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
-
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
 		// Delete the pixel data since we've generated the texture in video memory already.
 		delete data;
 
-		// mipmaps: OpenGL 3.0 version
 		glGenerateMipmap(GL_TEXTURE_2D);
-
-		//gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA8, width, height, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
 		Log("Loaded texture successfully: %s", filename.c_str());
 	}
@@ -82,7 +76,7 @@ void TextureAsset::Load(const std::string &filename, FilterType filter, bool rep
 void TextureAsset::Unload()
 {
 	Log("Removing texture from memory: %s", m_sFilename.c_str());
-	glDeleteTextures(1, &texID);
+	glDeleteTextures(1, &m_textureID);
 	delete this;
 }
 

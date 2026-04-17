@@ -28,3 +28,8 @@ void Button::InputChecks()
 		}
 	}
 }
+
+void Button::Render(const glm::mat4& projection)
+{
+	// Virtual function
+}

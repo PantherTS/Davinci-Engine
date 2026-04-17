@@ -6,7 +6,7 @@ using namespace DavinciEngine;
 // CONSTRUCTORS
 //////////////////////////////////////////////////////////////////////////
 
-TXMLWrapper::TXMLWrapper() : hDoc(nullptr), hRoot(nullptr), m_pfileName(nullptr)  {
+TXMLWrapper::TXMLWrapper() : hDoc(nullptr), hRoot(nullptr), m_pfileName(std::string()) {
 
 }
 

@@ -3,12 +3,9 @@
 
 using namespace DavinciEngine;
 
-Asset::Asset(AssetType type) : type(type)
-{
-	m_bIsCached = false;
-	m_iRefCount = 0;
-	type = ASSET_UNDEFINED;
-}
+Asset::Asset(AssetType assetType)
+	: type(assetType), m_bIsCached(false), m_iRefCount(0)
+{}
 
 void Asset::AddReference()
 {

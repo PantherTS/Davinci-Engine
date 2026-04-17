@@ -1,7 +1,7 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include "Vec2D.h"
+#include "Camera.h"
 #include "Transform.h"
 #include "LowLevelSystem.h"
 #include "tinyxml2.h"
@@ -22,6 +22,7 @@ namespace DavinciEngine{
 	class Scene;
 
 	enum ObjectType{
+		UNDEFINED = 0,
 		ACTOR
 	};
 
@@ -77,7 +78,7 @@ namespace DavinciEngine{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Renders this Object.</summary>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		virtual void Render();
+		void Render(const glm::mat4& vp);
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Updates this Object.</summary>
@@ -96,7 +97,7 @@ namespace DavinciEngine{
 		///
 		/// <returns> true if enabled, false if not.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		const bool IsEnabled();
+		const bool IsEnabled() const;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Gets the name of the Object.</summary>
@@ -209,7 +210,7 @@ namespace DavinciEngine{
 		bool m_bIsVisible;
 
 		/// <summary> The coordinates of the Camera on the Object </summary>
-		Vec2D m_vec2FollowCamera; 
+		glm::vec2 m_vec2FollowCamera;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Loads the inputs that are possible for this Object from the XML data file.</summary>
@@ -217,6 +218,8 @@ namespace DavinciEngine{
 		/// <param name="element"> [in,out] If non-null, the element.</param>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		void LoadInputs( tinyxml2::XMLElement *element );
+
+		glm::mat4 GetModelMatrix() const;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Destructor.</summary>

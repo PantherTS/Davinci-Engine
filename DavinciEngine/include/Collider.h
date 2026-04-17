@@ -1,10 +1,10 @@
 #ifndef COLLIDER_H
 #define COLLIDER_H
 
-#include "Vec2D.h"
 #include "FileNode.h"
 #include "tinyxml2.h"
 #include <stdio.h>
+#include <glm/glm.hpp>
 
 class tinyxml2::XMLDocument;
 class tinyxml2::XMLElement;
@@ -77,10 +77,10 @@ namespace DavinciEngine{
 		///
 		/// <returns> The object position.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		Vec2D GetObjectPosition();
+		glm::vec2 GetObjectPosition();
 
 		/// <summary> The offset of the collider object </summary>
-		Vec2D offset;
+		glm::vec2 offset;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Makes a deep copy of this object.</summary>
@@ -122,7 +122,7 @@ namespace DavinciEngine{
 		///
 		/// <returns> true if it succeeds, false if it fails.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		static bool LinesIntersect(const Vec2D& aStart, const Vec2D& aEnd, const Vec2D& bStart, const Vec2D& bEnd);
+		static bool LinesIntersect(const glm::vec2& aStart, const glm::vec2& aEnd, const glm::vec2& bStart, const glm::vec2& bEnd);
 
 	private:
 

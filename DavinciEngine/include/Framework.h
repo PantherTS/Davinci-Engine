@@ -1,20 +1,20 @@
 #ifndef FRAMEWORK_H
 #define FRAMEWORK_H
 
-#include "Vec2D.h"
 //#include "CommandConsole.h"
-#include "sdl/sdl.h"
+#include "SDL3/SDL.h"
 #include <string>
 #include <fstream>
+#include "glm/glm.hpp"
 
-namespace DavinciEngine{
+namespace DavinciEngine {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/// <summary> Values that represent KeyCodes. </summary>
 	////////////////////////////////////////////////////////////////////////////////////////////////////
-	enum KeyCode{
-		KEY_UNDEFINED=-1,
-		KEY_BACKSPACE=0,
+	enum KeyCode {
+		KEY_UNDEFINED = -1,
+		KEY_BACKSPACE = 0,
 		KEY_TAB,
 		KEY_CLEAR,
 		KEY_RETURN,
@@ -132,8 +132,8 @@ namespace DavinciEngine{
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	enum MouseButton
 	{
-		MOUSE_BUTTON_UNDEFINED=-1,
-		MOUSE_BUTTON_LEFT=0,
+		MOUSE_BUTTON_UNDEFINED = -1,
+		MOUSE_BUTTON_LEFT = 0,
 		MOUSE_BUTTON_MIDDLE,
 		MOUSE_BUTTON_RIGHT,
 		MOUSE_BUTTON_WHEELUP,
@@ -144,7 +144,7 @@ namespace DavinciEngine{
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/// <summary> Framework class sets up the engine to run on a certain type of platform. </summary>
 	////////////////////////////////////////////////////////////////////////////////////////////////////
-	class Framework{
+	class Framework {
 	public:
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,7 +152,7 @@ namespace DavinciEngine{
 		///
 		/// <returns> null if it fails, else the instance.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		static Framework *GetInstance();
+		static Framework* GetInstance();
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Destroys this object.</summary>
@@ -169,7 +169,7 @@ namespace DavinciEngine{
 		///
 		/// <returns> The default content path.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		const char * GetDefaultContentPath() noexcept {return "../";};
+		std::string GetDefaultContentPath() noexcept;
 
 		/// <summary> Array holding boolean values for the KeyCode keys </summary>
 		bool m_bKeys[KEY_MAX];
@@ -178,7 +178,7 @@ namespace DavinciEngine{
 		bool m_bMouseButtons[MOUSE_BUTTON_MAX];
 
 		/// <summary> The mouse coordinates </summary>
-		Vec2D m_v2dMousePosition;
+		glm::vec2 m_v2dMousePosition = glm::vec2(0.0f);
 
 		/// <summary> The value of the mouse wheel </summary>
 		float m_fMouseWheel;
@@ -196,11 +196,11 @@ namespace DavinciEngine{
 		~Framework();
 
 		/// <summary> The pointer to the framework singleton </summary>
-		static Framework *m_pFramework;
+		static Framework* m_pFramework;
 		//cCommandConsole *m_pCommandConsole;
 
 		/// <summary> The width and height of the display </summary>
-		int width,height;
+		int width, height;
 	};
 };
 #endif

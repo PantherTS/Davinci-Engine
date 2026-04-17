@@ -1,28 +1,32 @@
 #include "LUAModule.h"
 #include "LowLevelSystem.h"
+#include "DavinciEngine.h"
 
 using namespace DavinciEngine;
 
-LUAModule *LUAModule::m_pLUAModule = nullptr;
+LUAModule* LUAModule::m_pLUAModule = nullptr;
 
 LUAModule::LUAModule()
 {
 	// Create the LUA state and connect to tolua
-	m_pLUAState = luaL_newstate();
-	tolua_LuaInterface_open(m_pLUAState);
+	m_LUAState.open_libraries(sol::lib::base,
+		sol::lib::package,
+		sol::lib::string,
+		sol::lib::math,
+		sol::lib::table,
+		sol::lib::os,
+		sol::lib::debug);
 
 	// Load LUA standard libraries for functionality
-	luaL_openlibs(m_pLUAState);
+	BindEngine();
 }
 
 LUAModule::~LUAModule()
-{
-	lua_close(m_pLUAState);
-}
+{}
 
-LUAModule *LUAModule::GetInstance()
+LUAModule* LUAModule::GetInstance()
 {
-	if(!m_pLUAModule){
+	if (!m_pLUAModule) {
 		m_pLUAModule = new LUAModule();
 	}
 	return m_pLUAModule;
@@ -30,44 +34,48 @@ LUAModule *LUAModule::GetInstance()
 
 void LUAModule::Destroy()
 {
-	if(m_pLUAModule){
+	if (m_pLUAModule) {
 		delete m_pLUAModule;
 		m_pLUAModule = nullptr;
 	}
 }
 
-lua_State *LUAModule::GetLuaState(){
-	return m_pLUAState;
+sol::state& LUAModule::GetLuaState() {
+	return m_LUAState;
 }
 
-bool LUAModule::RunScript(const char *scriptFile)
+void LUAModule::BindEngine()
 {
-	int luaResult;
+	m_LUAState.new_usertype<DavinciEngine::Davinci>("Davinci",
+		"SetGameMode", &DavinciEngine::Davinci::SetGameMode,
+		"LoadActor", &DavinciEngine::Davinci::LoadActor
+	);
 
-	// Load the script file into the LUA State
-	luaResult = luaL_loadfile(m_pLUAState, scriptFile);
+	auto engine = DavinciEngine::Davinci::Engine_GetInstance();
+	m_LUAState["Engine"] = engine;
+}
 
-	// Check to see if the script file was loaded successfully
-	if (luaResult != LUA_OK) {
-		const char* errmsg = lua_tostring(m_pLUAState, -1);
-		if (!errmsg) {
-			errmsg = "No LUA error message.";
-		}
-		Error("LUA Error %i: %s", luaResult, errmsg);
+bool LUAModule::RunScript(const char* scriptFile)
+{
+	std::string path(scriptFile);
+
+	sol::load_result script = m_LUAState.load_file(path);
+
+	if (!script.valid())
+	{
+		sol::error err = script;
+		Error("Lua Load Error: %s", err.what());
 		return false;
 	}
 
-	// Run the script that was loaded into the state
-	luaResult = lua_pcall(m_pLUAState, 0, LUA_MULTRET, 0);
+	sol::protected_function_result result = script();
 
-	// Check for any errors returned from the script
-	if (luaResult != LUA_OK) {
-		const char* errmsg = lua_tostring(m_pLUAState, -1);
-		if (!errmsg) {
-			errmsg = "No LUA error message.";
-		}
-		Error("LUA Error %i: %s", luaResult, errmsg);
+	if (!result.valid())
+	{
+		sol::error err = result;
+		Error("Lua Runtime Error: %s", err.what());
 		return false;
 	}
+
 	return true;
 }

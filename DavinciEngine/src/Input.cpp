@@ -46,33 +46,32 @@ void Input::Update(){
 	OnEvent();
 }
 
-Vec2D Input::GetMousePosition(){
+glm::vec2 Input::GetMousePosition() const{
 	return m_pFramework->m_v2dMousePosition;
 }
 
-bool Input::IsMouseButtonHeld(MouseButton mouseButton){
+bool Input::IsMouseButtonHeld(MouseButton mouseButton) const{
 	return (m_pFramework->m_bMouseButtons[mouseButton]) ? true:false;
 }
 
-bool Input::IsMouseButtonReleased(MouseButton mouseButton){
+bool Input::IsMouseButtonReleased(MouseButton mouseButton) const{
 	return !(currentMouseButtons[mouseButton]) ? true:false;
 }
 
-bool Input::IsMouseButtonPressed(MouseButton mouseButton){
+bool Input::IsMouseButtonPressed(MouseButton mouseButton) const{
 	return (currentMouseButtons[mouseButton]) ? true:false;
 }
 
-bool Input::IsKeyPressed(const SDL_KeyboardEvent& KeyCode){
-	return currentKeys[KeyCode.keysym.sym] && !previousKeys[KeyCode.keysym.sym];
+bool Input::IsKeyPressed(const SDL_KeyboardEvent& KeyCode) const{
+	return currentKeys[KeyCode.key] && !previousKeys[KeyCode.key];
 }
 
-bool Input::IsKeyReleased(const SDL_KeyboardEvent& KeyCode){
-	return !currentKeys[KeyCode.keysym.sym] && previousKeys[KeyCode.keysym.sym];
+bool Input::IsKeyReleased(const SDL_KeyboardEvent& KeyCode) const{
+	return !currentKeys[KeyCode.key] && previousKeys[KeyCode.key];
 }
 
-bool Input::IsKeyHeld(const SDL_KeyboardEvent& KeyCode)
-{
-	return currentKeys[KeyCode.keysym.sym];
+bool Input::IsKeyHeld(const SDL_KeyboardEvent& KeyCode) const{
+	return currentKeys[KeyCode.key];
 }
 
 void Input::OnEvent(){

@@ -1,6 +1,8 @@
 #ifndef DAVINCI_H
 #define DAVINCI_H
 
+#pragma once
+#include "DavinciAPI.h"
 #include <string>
 
 namespace DavinciEngine{
@@ -8,7 +10,7 @@ namespace DavinciEngine{
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/// <summary> The Davinci class is the primary engine object. </summary>
 	////////////////////////////////////////////////////////////////////////////////////////////////////
-	class __declspec(dllexport) Davinci
+	class DAVINCI_API Davinci
 	{
 	private:
 

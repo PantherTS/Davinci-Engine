@@ -11,8 +11,9 @@
 #include "GUI.h"
 #include "Input.h"
 #include "DavinciEngine.h"
-#include "SDL/SDL.h"
+#include "SDL3/SDL.h"
 #include "Actor.h"
+#include "QuadRenderer.h"
 #include <string>
 
 using namespace DavinciEngine;
@@ -49,6 +50,7 @@ void Davinci::Engine_Destroy()
 	m_pScene->Destroy();
 	m_pInput->Destroy();
 	m_pGUI->Destroy();
+	QuadRenderer::Shutdown();
 	m_pLUAModule->Destroy();
 	m_pModeManager->Destroy();
 	m_pXMLSettings->Destroy();
@@ -104,6 +106,9 @@ bool Davinci::Engine_Init()
 	{
 		return false;
 	}
+
+	// Load Renderers
+	QuadRenderer::Init();
 
 	m_pLUAModule = LUAModule::GetInstance();
 	m_pInput = Input::GetInstance();
@@ -186,7 +191,7 @@ void Davinci::Engine_Update()
 bool Davinci::RunScript(const char *scriptFile)
 {
 	std::string scriptPath = Framework::GetInstance()->GetDefaultContentPath();
-	scriptPath.append("data/lua_scripts/");
+	scriptPath.append("scripts/");
 	scriptPath.append(scriptFile);
 	if(Verify_Exists(scriptPath.c_str(),false)){
 		return m_pLUAModule->RunScript(scriptPath.c_str());

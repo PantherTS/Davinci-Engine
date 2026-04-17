@@ -1,6 +1,6 @@
 #include "XMLFileNode.h"
 #include <sstream>
-#include "Vec2D.h"
+#include "glm/glm.hpp"
 #include <format>
 
 using namespace DavinciEngine;
@@ -43,7 +43,7 @@ void XMLFileNode::Write(const std::string &name, const char *&value)
 	element->SetAttribute(name.c_str(), value);
 }
 
-void XMLFileNode::Write(const std::string& name, const Vec2D& value)
+void XMLFileNode::Write(const std::string& name, const glm::vec2 &value)
 {
 	std::string buffer = std::format("{} {}", value.x, value.y);
 	element->SetAttribute(name.c_str(), buffer.c_str());
@@ -103,7 +103,7 @@ void XMLFileNode::Read(const std::string &name, std::string &value)
 	}
 }
 
-void XMLFileNode::Read(const std::string &name, Vec2D &value)
+void XMLFileNode::Read(const std::string &name, glm::vec2 &value)
 {
 	if (element->Attribute(name.c_str()))
 	{

@@ -75,7 +75,7 @@ void Actor::Copy(Actor &newActor, const Actor &other)
 
 bool Actor::LoadActor(const char *actorType, float xPos, float yPos)
 {
-	Log("Loading new actor of [%s] type.",actorType);
+	Log("Loading new actor type [%s].",actorType);
 
 	// Check for duplicate Actors present in the scene and create a copy if there is one.
 	// This will save from having to reload the XML file over and over again.
@@ -88,13 +88,13 @@ bool Actor::LoadActor(const char *actorType, float xPos, float yPos)
 		std::string file = actorType;
 		std::transform(file.begin(), file.end(), file.begin(), ::tolower);
 		// Try to load the XML file for the Actor here.
-		std::string xmlPath = "../data/actors/" + file + ".xml";
+		std::string xmlPath = "assets/actors/" + file + ".xml";
 		if( !pActor->LoadXML(xmlPath) ){
 			delete pActor;
 			pActor = nullptr;
 			return false;
 		}
-		Log("XML file loaded successfully for Actor Type %s.",pActor->m_sActorType.c_str());
+		Log("XML file loaded successfully for actor type [%s].",pActor->m_sActorType.c_str());
 	}
 	// Duplicate actor of same type found. Copy relevant data.
 	else{
@@ -232,7 +232,7 @@ TextureAtlas *Actor::GetTextureAtlas()
 void Actor::Update()
 {
 	if(m_pSprite->m_bIsMoving){
-		Vec2D prePosition(position);
+		glm::vec2 prePosition(position);
 		m_pSprite->Move(position);
 		CheckCollisions(prePosition);
 	}
@@ -247,7 +247,7 @@ void Actor::Update()
 	m_pSprite->Animate();
 }
 
-void Actor::CheckCollisions(Vec2D &prePosition)
+void Actor::CheckCollisions(glm::vec2 &prePosition)
 {
 	if(Collide("ACTOR")){
 		position = prePosition;
@@ -268,7 +268,7 @@ void Actor::AIRoutine()
 			//if(static_cast<Actor*>(*i)->m_pAIType->m_sAttitudeToPlayer == "HOSTILE"){
 			if ((*i)->HasTag("PLAYER")) {
 				// Try to move to center of where player sprite is. If collision occurs then stop.
-				if (position.DistanceBetween((*i)->position) > 80) {
+				if (glm::distance(position, (*i)->position) > 80) {
 					m_pSprite->m_sCurrentAction = "walking";
 					m_pSprite->MoveTo((*i)->position, position);
 					break;
@@ -305,7 +305,7 @@ void Actor::DetectOthers()
 * related and is not the player then return the nearby		*
 * Actor's attitude to others.								*
 ************************************************************/
-std::string Actor::CheckAttitude(const Actor *otherActor)
+std::string Actor::CheckAttitude(const Actor *otherActor) const
 {
 	if(otherActor != nullptr){
 		// Check if the nearby Actor is a family member

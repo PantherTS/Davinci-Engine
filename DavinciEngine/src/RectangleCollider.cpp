@@ -6,7 +6,7 @@ using namespace DavinciEngine;
 // so 0,0 is the center of the sprite
 // unless you set an offset (position)
 
-RectangleCollider::RectangleCollider(float width, float height, Vec2D offset)
+RectangleCollider::RectangleCollider(float width, float height, glm::vec2 offset)
 	: Collider()
 {
 	this->offset	= offset;
@@ -28,24 +28,24 @@ ColliderType RectangleCollider::GetColliderType()
 	return CT_RECT;
 }
 
-bool RectangleCollider::IntersectsPoint(const Vec2D& point, CollisionData *collisionData)
+bool RectangleCollider::IntersectsPoint(const glm::vec2& point, CollisionData *collisionData)
 {
-	//Vec2D ePos = GetObjectPosition();
+	//glm::vec2 ePos = GetObjectPosition();
 
 	return (point.x > GetLeft() && point.y > GetTop() && point.x < GetRight() && point.y < GetBottom());
 }
 
-bool RectangleCollider::IntersectsLine(const Vec2D& start, const Vec2D& end, float lineRadius, CollisionData *collisionData)
+bool RectangleCollider::IntersectsLine(const glm::vec2& start, const glm::vec2& end, float lineRadius, CollisionData *collisionData)
 {
 	//TODO: Support line width!
 
 	if (IntersectsPoint(start) || IntersectsPoint(end))
 		return true;
 
-	Vec2D pA = GetTopLeft();
-	Vec2D pB = GetTopRight();
-	Vec2D pC = GetBottomRight();
-	Vec2D pD = GetBottomLeft();
+	glm::vec2 pA = GetTopLeft();
+	glm::vec2 pB = GetTopRight();
+	glm::vec2 pC = GetBottomRight();
+	glm::vec2 pD = GetBottomLeft();
 
 	return (LinesIntersect(start, end, pA, pB) || LinesIntersect(start, end, pB, pC) || LinesIntersect(start, end, pC, pD) || LinesIntersect(start, end, pD, pA));
 }
@@ -82,22 +82,22 @@ float RectangleCollider::GetBottom(bool relativeToEntity)
 		return GetObjectPosition().y + offset.y + height*0.5f;
 }
 
-Vec2D RectangleCollider::GetTopLeft(bool relativeToEntity)
+glm::vec2 RectangleCollider::GetTopLeft(bool relativeToEntity)
 {
-	return Vec2D(GetLeft(relativeToEntity), GetTop(relativeToEntity));
+	return glm::vec2(GetLeft(relativeToEntity), GetTop(relativeToEntity));
 }
 
-Vec2D RectangleCollider::GetTopRight(bool relativeToEntity)
+glm::vec2 RectangleCollider::GetTopRight(bool relativeToEntity)
 {
-	return Vec2D(GetRight(relativeToEntity), GetTop(relativeToEntity));
+	return glm::vec2(GetRight(relativeToEntity), GetTop(relativeToEntity));
 }
 
-Vec2D RectangleCollider::GetBottomLeft(bool relativeToEntity)
+glm::vec2 RectangleCollider::GetBottomLeft(bool relativeToEntity)
 {
-	return Vec2D(GetLeft(relativeToEntity), GetBottom(relativeToEntity));
+	return glm::vec2(GetLeft(relativeToEntity), GetBottom(relativeToEntity));
 }
 
-Vec2D RectangleCollider::GetBottomRight(bool relativeToEntity)
+glm::vec2 RectangleCollider::GetBottomRight(bool relativeToEntity)
 {
-	return Vec2D(GetRight(relativeToEntity), GetBottom(relativeToEntity));
+	return glm::vec2(GetRight(relativeToEntity), GetBottom(relativeToEntity));
 }

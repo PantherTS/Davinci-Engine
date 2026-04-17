@@ -1,5 +1,6 @@
 #include "AssetManager.h"
 #include "TextureAsset.h"
+#include "ShaderAsset.h"
 #include "Framework.h"
 
 //#include "Audio/AudioAsset.h"
@@ -40,7 +41,7 @@ void AssetManager::Init()
 	SetContentPath(Framework::GetInstance()->GetDefaultContentPath());
 }
 
-TextureAsset *AssetManager::RequestTexture(const std::string &filename, FilterType filter /* = FILTER_LINEAR */, bool repeatX /* = false */, bool repeatY /* = false */)
+TextureAsset* AssetManager::RequestTexture(const std::string &filename, FilterType filter /* = FILTER_LINEAR */, bool repeatX /* = false */, bool repeatY /* = false */)
 {
 	TextureAsset *asset = NULL;
 	std::string fullFilename = contentPath + filename;
@@ -62,6 +63,33 @@ TextureAsset *AssetManager::RequestTexture(const std::string &filename, FilterTy
 	}
 
 	// Return the texture asset.
+	return asset;
+}
+
+ShaderAsset* AssetManager::RequestShader(const std::string& vert, const std::string& frag)
+{
+	std::string key = vert + frag;
+
+	ShaderAsset* asset = (ShaderAsset*)GetAssetByFilename(key);
+
+	if (!asset)
+	{
+		asset = new ShaderAsset();
+
+		std::string fullVert = contentPath + vert;
+		std::string fullFrag = contentPath + frag;
+
+		if (!asset->Load(fullVert, fullFrag))
+		{
+			delete asset;
+			return nullptr;
+		}
+
+		asset->m_sFilename = key;
+		StoreAsset(asset);
+	}
+
+	asset->AddReference();
 	return asset;
 }
 

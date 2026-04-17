@@ -67,7 +67,7 @@ Collider* Collider::Load(tinyxml2::XMLElement* element)
 	XMLFileNode.Read("offsetx",offsetx);
 	XMLFileNode.Read("offsety",offsety);
 	
-	Vec2D offset(static_cast<float>(offsetx),static_cast<float>(offsety));
+	glm::vec2 offset(static_cast<float>(offsetx),static_cast<float>(offsety));
 
 	switch (type)
 	{
@@ -105,13 +105,13 @@ Object* Collider::GetObject()
 	return m_pObject;
 }
 
-Vec2D Collider::GetObjectPosition()
+glm::vec2 Collider::GetObjectPosition()
 {
 	if(m_pObject != nullptr){
 		return m_pObject->position;
 	}
 	else{
-		return Vec2D();		
+		return glm::vec2();		
 	}
 }
 
@@ -163,7 +163,7 @@ bool Collider::Collide(Collider* a, Collider* b, CollisionData *collisionData)
 	return false;
 }
 
-bool Collider::LinesIntersect(const Vec2D& aStart, const Vec2D& aEnd, const Vec2D& bStart, const Vec2D& bEnd)
+bool Collider::LinesIntersect(const glm::vec2& aStart, const glm::vec2& aEnd, const glm::vec2& bStart, const glm::vec2& bEnd)
 {
 	float d = ((bEnd.y - bStart.y) * (aEnd.x - aStart.x)) - ((bEnd.x - bStart.x) * (aEnd.y - aStart.y));
 	float nX = ((bEnd.x - bStart.x) * (aStart.y - bStart.y)) - ((bEnd.y - bStart.y) * (aStart.x - bStart.x));

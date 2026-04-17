@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vec2D.h"
+#include <glm/glm.hpp>
 #include "Collider.h"
 
 namespace DavinciEngine
@@ -18,10 +18,10 @@ namespace DavinciEngine
 		CollisionData();
 
 		/// <summary> The position where the collision occurred </summary>
-		Vec2D hitPoint;
+		glm::vec2 hitPoint;
 
 		/// <summary> The normal of the collision </summary>
-		Vec2D normal;
+		glm::vec2 normal;
 
 		/// <summary> The penetration of the collider (how far into the collider we've moved) </summary>
 		float penetration;

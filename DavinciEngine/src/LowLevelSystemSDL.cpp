@@ -30,6 +30,7 @@ namespace DavinciEngine{
 		newMessage += ": ";
 		newMessage += text;
 		newMessage += "\n";
+		printf(newMessage.c_str());
 	}
 
 	void Warning(const char* fmt, ...)

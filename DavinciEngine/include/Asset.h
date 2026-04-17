@@ -14,6 +14,7 @@ namespace DavinciEngine{
 	{
 		ASSET_UNDEFINED,
 		ASSET_TEXTURE,
+		ASSET_SHADER,
 		ASSET_AUDIO,
 		ASSET_FONT
 	};

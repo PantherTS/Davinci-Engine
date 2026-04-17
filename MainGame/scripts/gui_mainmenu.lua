@@ -1,0 +1,5 @@
+Engine:SetGameMode(2)
+Engine:LoadActor("Player",512,350)
+Engine:LoadActor("Soldier1",100,100)
+Engine:LoadActor("Soldier1",100,500)
+Engine:LoadActor("Soldier1",100,300)

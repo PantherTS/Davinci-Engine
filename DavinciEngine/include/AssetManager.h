@@ -9,6 +9,7 @@
 namespace DavinciEngine
 {
 	class TextureAsset;
+	class ShaderAsset;
 	//class FontAsset;
 	//class AudioAsset;
 	//class AudioDecoder;
@@ -42,7 +43,8 @@ namespace DavinciEngine
 		///
 		/// <returns> null if it fails, else.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		TextureAsset *RequestTexture(const std::string &filename, FilterType filter = FILTER_LINEAR, bool repeatX = false, bool repeatY = false);
+		TextureAsset* RequestTexture(const std::string& filename, FilterType filter = FILTER_LINEAR, bool repeatX = false, bool repeatY = false);
+		ShaderAsset* RequestShader(const std::string& vert, const std::string& frag);
 		//static FontAsset *RequestFont(const std::string &filename, float size, int textureWidth=-1, int textureHeight=-1);
 		//static AudioAsset *RequestAudio(const std::string &filename, bool streamFromDisk=false, std::string decodeString = "");
 

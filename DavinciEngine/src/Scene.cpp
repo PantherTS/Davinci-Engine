@@ -1,22 +1,24 @@
 #include "Scene.h"
 #include "Timer.h"
 #include "Graphic.h"
+#include "UIControl.h"
 
 using namespace DavinciEngine;
 
-Scene *Scene::m_pScene;
-std::map<std::string,Object*> Scene::SceneObjects;
-std::multimap<int,Object*> Scene::LayeredSceneObjects;
-std::map<std::string,Object*> Scene::toAdd;
-std::map<std::string,Object*> Scene::toRemove;
+Scene* Scene::m_pScene;
+std::map<std::string, Object*> Scene::SceneObjects;
+std::multimap<int, Object*> Scene::LayeredSceneObjects;
+std::map<std::string, Object*> Scene::toAdd;
+std::map<std::string, Object*> Scene::toRemove;
 std::map<std::string, std::list<Object*> > Scene::tagMap;
-std::list<Camera*> Scene::cameras;
+std::list<OrthographicCamera*> Scene::cameras;
+std::list<UIControl*> Scene::UIControls;
 
 // Class constructor
-Scene::Scene() : m_pWindow(Window::GetInstance()),m_pGUI(GUI::GetInstance()), m_bIsVisible(true)
+Scene::Scene() : m_pWindow(Window::GetInstance()), m_pGUI(GUI::GetInstance()), m_bIsVisible(true)
 {
-	Camera *camera = new Camera();
-	camera->position = m_pWindow->GetWindowCenter();
+	OrthographicCamera* camera = new OrthographicCamera(m_pWindow->GetWidth(), m_pWindow->GetHeight());
+	camera->position = glm::vec3(0.0f, 0.0f, 1.0f);
 	AddCamera(camera);
 }
 
@@ -28,15 +30,15 @@ Scene::~Scene()
 }
 
 // Class Singleton reference
-Scene *Scene::GetInstance(){
-	if (!m_pScene){
+Scene* Scene::GetInstance() {
+	if (!m_pScene) {
 		m_pScene = new Scene();
 	}
 	return m_pScene;
 }
 
-void Scene::Destroy(){
-	if(m_pScene){
+void Scene::Destroy() {
+	if (m_pScene) {
 		m_pScene->ClearScene();
 		m_pScene->ResolveObjectChanges();
 		delete m_pScene;
@@ -44,7 +46,7 @@ void Scene::Destroy(){
 	}
 }
 
-void Scene::Add(Object *object)
+void Scene::Add(Object* object)
 {
 	if (object)
 	{
@@ -60,7 +62,7 @@ void Scene::Add(Object *object)
 	}
 }
 
-void Scene::Remove(Object *object)
+void Scene::Remove(Object* object)
 {
 	if (object)
 	{
@@ -76,15 +78,15 @@ void Scene::Remove(Object *object)
 	}
 }
 
-void Scene::UpdateLayerList(Object *object, bool remove)
+void Scene::UpdateLayerList(Object* object, bool remove)
 {
-	if(!remove){
-		LayeredSceneObjects.insert(std::pair<int,Object*>(object->m_iLayer, object));
+	if (!remove) {
+		LayeredSceneObjects.insert(std::pair<int, Object*>(object->m_iLayer, object));
 	}
-	else{
-		std::multimap<int,Object*>::iterator i = LayeredSceneObjects.find(object->m_iLayer);
-	
-		while(i != LayeredSceneObjects.end() && (i->second != object || i->second->m_iLayer != object->m_iLayer))
+	else {
+		std::multimap<int, Object*>::iterator i = LayeredSceneObjects.find(object->m_iLayer);
+
+		while (i != LayeredSceneObjects.end() && (i->second != object || i->second->m_iLayer != object->m_iLayer))
 		{
 			i++;
 		}
@@ -92,19 +94,19 @@ void Scene::UpdateLayerList(Object *object, bool remove)
 	}
 }
 
-Object& Scene::Duplicate(const std::string &objectType){
-	Object *m_pObject = nullptr;
-	std::regex oType(objectType,std::regex_constants::icase);
+Object& Scene::Duplicate(const std::string& objectType) {
+	Object* m_pObject = nullptr;
+	std::regex oType(objectType, std::regex_constants::icase);
 
-	for(auto i = toAdd.begin(); i != toAdd.end(); ++i){
-		if(std::regex_match(i->second->GetType().begin(),i->second->GetType().end(),oType)){
+	for (auto i = toAdd.begin(); i != toAdd.end(); ++i) {
+		if (std::regex_match(i->second->GetType().begin(), i->second->GetType().end(), oType)) {
 			m_pObject = i->second;
 			break;
 		}
 	}
-	if(m_pObject == nullptr) {
-		for(auto i = SceneObjects.begin(); i != SceneObjects.end(); ++i){
-			if(std::regex_match(i->second->GetType().begin(),i->second->GetType().end(),oType)){
+	if (m_pObject == nullptr) {
+		for (auto i = SceneObjects.begin(); i != SceneObjects.end(); ++i) {
+			if (std::regex_match(i->second->GetType().begin(), i->second->GetType().end(), oType)) {
 				m_pObject = i->second;
 				break;
 			}
@@ -113,7 +115,7 @@ Object& Scene::Duplicate(const std::string &objectType){
 	return *m_pObject;
 }
 
-void Scene::Update(){
+void Scene::Update() {
 
 	if (!Timer::GetInstance()->is_paused())
 	{
@@ -128,58 +130,47 @@ void Scene::Update(){
 	ResolveObjectChanges();
 }
 
-void Scene::Render(){
-	if (m_bIsVisible)
-	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
-		glLoadIdentity();
-		glScalef(m_pWindow->GetWindowScale().x, m_pWindow->GetWindowScale().y, 0.0f);
-		glTranslatef(m_pWindow->GetWindowCenter().x, m_pWindow->GetWindowCenter().y, 0.0f);
+void Scene::Render()
+{
+	if (!m_bIsVisible) return;
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//Render all the Objects based on their layer
+	// Get the base projection for UI and Camera
+	glm::mat4 projection = glm::ortho(0.0f, (float)m_pWindow->GetWidth(), (float)m_pWindow->GetHeight(), 0.0f, -1.0f, 1.0f);
 
-		constexpr int MAX_LAYER = 100;
-		constexpr int MIN_LAYER = -100;
-
-		for (std::list<Camera*>::iterator camera = cameras.begin(); camera != cameras.end(); ++camera)
-		{
-			// Push the Camera matrix.
-			glPushMatrix();
-			(*camera)->ApplyMatrix();
-			
-			// Render according to the layer of the Objects in the scene.(Highest to Lowest)
-			for (int layer = MAX_LAYER; layer >= MIN_LAYER; layer--)
-			{
-				std::multimap<int,Object*>::iterator i = LayeredSceneObjects.find(layer);
-				while(i != LayeredSceneObjects.end() && i->first == layer){
-					i->second->Render();
-					i++;
-				}
-			}
-			// Pop the Camera matrix.
-			glPopMatrix();
+	// 1. Render World (Camera Space)
+	for (auto* camera : cameras) {
+		glm::mat4 vp = camera->GetViewProjection();
+		for (auto const& [layer, object] : LayeredSceneObjects) {
+			object->Render(vp);
 		}
-		// Show the buffered surface
-		SDL_GL_SwapWindow(m_pWindow->m_pScreen);
 	}
+
+	// 2. Render UI (Screen Space)
+	for (auto* control : UIControls) {
+		control->Render(projection); // UI ignores camera movement
+	}
+
+	SDL_GL_SwapWindow(m_pWindow->m_pScreen);
 }
 
-void Scene::ClearScene(){
+
+void Scene::ClearScene() {
 	for (auto i = SceneObjects.begin(); i != SceneObjects.end(); ++i)
 		Remove(i->second);
 }
 
-void Scene::ResolveObjectChanges(){
-	
+void Scene::ResolveObjectChanges() {
+
 	//Resolve removes from the scene
-	std::map<std::string,Object*>::iterator i = toRemove.begin();
+	std::map<std::string, Object*>::iterator i = toRemove.begin();
 
 	while (i != toRemove.end())
 	{
 		//If the tag is set, remove the entity from the tag map
 		for (int j = 0; j < i->second->GetNumberOfTags(); ++j)
 			ObjectRemoveTag(i->second, i->second->GetTag(j));
-		
+
 		i->second->m_pScene = nullptr;
 		SceneObjects.erase(i->first);
 		// May add virtual Removed function back in if I need to perform an action after an Object is removed from the scene.
@@ -193,7 +184,7 @@ void Scene::ResolveObjectChanges(){
 	//Resolve additions to the scene
 	for (auto it = toAdd.begin(); it != toAdd.end(); ++it)
 	{
-		SceneObjects.insert(std::pair<std::string,Object*>(it->first,it->second));
+		SceneObjects.insert(std::pair<std::string, Object*>(it->first, it->second));
 
 		//If the tag is set, add the entity to the tag map
 		for (int j = 0; j < it->second->GetNumberOfTags(); ++j)
@@ -206,12 +197,12 @@ void Scene::ResolveObjectChanges(){
 	toAdd.clear();
 }
 
-void Scene::GetNearbyObjectTypes(std::list<Object*> &objects,Object* otherObject, float range)
+void Scene::GetNearbyObjectTypes(std::list<Object*>& objects, Object* otherObject, float range)
 {
-	for(auto i = SceneObjects.begin(); i != SceneObjects.end(); ++i)
+	for (auto i = SceneObjects.begin(); i != SceneObjects.end(); ++i)
 	{
-		if(i->second != otherObject && i->second->objectType == otherObject->objectType){
-			if(i->second->position.DistanceBetween(otherObject->position) < range)
+		if (i->second != otherObject && i->second->objectType == otherObject->objectType) {
+			if (glm::distance(i->second->position, otherObject->position) < range)
 			{
 				objects.push_back(i->second);
 			}
@@ -219,14 +210,14 @@ void Scene::GetNearbyObjectTypes(std::list<Object*> &objects,Object* otherObject
 	}
 }
 
-std::string Scene::GetNewID(std::string objectType){
+std::string Scene::GetNewID(std::string objectType) {
 
 	std::string objectName;
 	std::stringstream ss;
 	std::string temp;
 	int next_integer = 0;
 
-	do{
+	do {
 		next_integer++;
 		ss.clear();
 		ss << next_integer;
@@ -239,17 +230,17 @@ std::string Scene::GetNewID(std::string objectType){
 	return objectName;
 }
 
-bool Scene::VerifyExists(const std::string& objectName){
+bool Scene::VerifyExists(const std::string& objectName) {
 	auto it = SceneObjects.find(objectName);
-	if(it == SceneObjects.end()){
+	if (it == SceneObjects.end()) {
 		return false;
 	}
-	else{
+	else {
 		return true;
 	}
 }
 
-Object& Scene::GetPlayer(){
+Object& Scene::GetPlayer() {
 	// Search the SceneObjects map to find the player object
 	auto it = SceneObjects.find("Actor_Player");
 	if (it == SceneObjects.end()) throw std::invalid_argument("entry not found");
@@ -261,7 +252,7 @@ void Scene::ObjectAddTag(Object* object, const std::string& tag)
 	tagMap[tag].push_back(object);
 }
 
-void Scene::ObjectRemoveTag(Object *object, const std::string& tag)
+void Scene::ObjectRemoveTag(Object* object, const std::string& tag)
 {
 	tagMap[tag].remove(object);
 }
@@ -274,7 +265,7 @@ Object* Scene::GetFirstTag(const std::string& tag)
 	return tagMap[tag].front();
 }
 
-std::list<Object*> *Scene::GetAllTags(const std::string& tag)
+std::list<Object*>* Scene::GetAllTags(const std::string& tag)
 {
 	if (tagMap.count(tag) == 0)
 		return nullptr;
@@ -284,21 +275,21 @@ std::list<Object*> *Scene::GetAllTags(const std::string& tag)
 
 const int Scene::GetTagCount(const std::string& tag)
 {
-	if (tagMap.count(tag) == 0) 
+	if (tagMap.count(tag) == 0)
 		return 0;
 
 	return static_cast<int>(tagMap[tag].size());
 }
 
-void Scene::AddCamera(Camera *camera)
+void Scene::AddCamera(OrthographicCamera* camera)
 {
 	cameras.push_back(camera);
 }
 
-const Camera *Scene::GetCamera(int cameraIndex)
+const OrthographicCamera* Scene::GetCamera(int cameraIndex)
 {
 	constexpr int c = 0;
-	for (std::list<Camera*>::iterator i = cameras.begin(); i != cameras.end(); i++)
+	for (std::list<OrthographicCamera*>::iterator i = cameras.begin(); i != cameras.end(); i++)
 	{
 		if (c == cameraIndex)
 			return *i;
@@ -308,9 +299,9 @@ const Camera *Scene::GetCamera(int cameraIndex)
 
 void Scene::DestroyAllCameras()
 {
-	for (std::list<Camera*>::iterator i = cameras.begin(); i != cameras.end(); i++)
+	for (std::list<OrthographicCamera*>::iterator i = cameras.begin(); i != cameras.end(); i++)
 	{
-		delete *i;
+		delete* i;
 	}
 	cameras.clear();
 }

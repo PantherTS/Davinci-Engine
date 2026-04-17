@@ -1,6 +1,6 @@
 #ifndef GUI_H
 #define GUI_H
-#include "SDL/SDL.h"
+#include "SDL3/SDL.h"
 #include "Input.h"
 #include "UIControl.h"
 #include "Button.h"

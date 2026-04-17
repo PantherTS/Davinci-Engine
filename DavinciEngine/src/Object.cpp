@@ -5,15 +5,16 @@
 #include "XMLFileNode.h"
 #include "Scene.h"
 
-namespace DavinciEngine{
+namespace DavinciEngine {
 
 	//////////////////////////////////////////////////////////////////////////
 	// CONSTRUCTORS
 	//////////////////////////////////////////////////////////////////////////
 
-	Object::Object() : Transform(), m_pInput(nullptr), m_pGraphic(nullptr), m_pCollider(nullptr), m_pCollision(Collision::GetInstance()), m_bIsEnabled(true), m_pScene(nullptr), m_fDepth(0.0f), m_bIsVisible(true)
-	{
-	}
+	Object::Object() : Transform(), m_pInput(nullptr), m_pGraphic(nullptr), m_pCollider(nullptr),
+		m_pCollision(Collision::GetInstance()), m_bIsEnabled(true), m_pScene(nullptr), m_fDepth(0.0f),
+		m_bIsVisible(true), m_vec2FollowCamera(glm::vec2(0.0f)), objectType(UNDEFINED), m_sObjectName("")
+	{}
 
 	Object::~Object()
 	{
@@ -103,29 +104,43 @@ namespace DavinciEngine{
 		this->m_bIsEnabled = true;
 	}
 
-	void Object::Render()
+	void Object::Render(const glm::mat4& vp)
 	{
-		glPushMatrix();
+		if (m_pGraphic)
+			m_pGraphic->Render(vp, GetModelMatrix());
+	}
 
-		if (m_vec2FollowCamera == Vec2D::zero){
-			m_fDepth = 0.0f;
-			glTranslatef(position.x, position.y, m_fDepth);
-		}
-		else
-			glTranslatef((m_pScene->GetCamera()->position * m_vec2FollowCamera + position * (Vec2D::one - m_vec2FollowCamera)).x, (m_pScene->GetCamera()->position * m_vec2FollowCamera + position * (Vec2D::one - m_vec2FollowCamera)).y, m_fDepth);
-
-		if (rotation != 0.0f)
-			glRotatef(rotation, 0, 0, 1);
-
-		glScalef(scale.x, scale.y, 1.0f);
-
-		if (m_pGraphic != nullptr)
+	glm::mat4 Object::GetModelMatrix() const
+	{
+		// 1. Parallax / Camera Follow
+		glm::vec2 finalPos = position;
+		if (m_vec2FollowCamera != glm::vec2(0.0f))
 		{
-			//Graphics::SetColor(color);
-			m_pGraphic->Render();
+			glm::vec2 camPos = m_pScene->GetCamera()->position;
+			finalPos = (camPos * m_vec2FollowCamera) + (position * (1.0f - m_vec2FollowCamera));
 		}
 
-		glPopMatrix();
+		// 2. Calculate actual pixel size
+		glm::vec2 baseSize = m_pGraphic ? m_pGraphic->GetSize() : glm::vec2(1.0f);
+		glm::vec2 finalScale = baseSize * scale;
+
+		// 3. Construct Matrix
+		glm::mat4 model = glm::mat4(1.0f);
+
+		// Translation:
+		glm::vec3 translation = glm::vec3(finalPos, m_fDepth);
+		model = glm::translate(model, translation);
+
+		// Rotation: Since our Quad is -0.5 to 0.5, this rotates around the sprite center.
+		if (rotation != 0.0f)
+		{
+			model = glm::rotate(model, glm::radians(rotation), glm::vec3(0, 0, 1));
+		}
+
+		// Scale: Apply the pixel dimensions.
+		model = glm::scale(model, glm::vec3(finalScale, 1.0f));
+
+		return model;
 	}
 
 	/************************************************************
@@ -139,7 +154,7 @@ namespace DavinciEngine{
 		// Virtual function
 	}
 
-	const bool Object::IsEnabled()
+	const bool Object::IsEnabled() const
 	{
 		return m_bIsEnabled;
 	}
@@ -153,16 +168,16 @@ namespace DavinciEngine{
 
 		if (this->m_pGraphic != nullptr)
 		{
-			Error("Object %s has already been assigned a graphic.",m_sObjectName.c_str());
+			Error("Object %s has already been assigned a graphic.", m_sObjectName.c_str());
 		}
 		else
 		{
-			Log("Object %s has been assigned a graphic.",m_sObjectName.c_str());
+			Log("Object %s has been assigned a graphic.", m_sObjectName.c_str());
 			this->m_pGraphic = graphic;
 		}
 	}
 
-	void Object::SetCollider(Collider *collider)
+	void Object::SetCollider(Collider* collider)
 	{
 		if (collider == nullptr && m_pCollider != nullptr)
 		{
@@ -171,7 +186,7 @@ namespace DavinciEngine{
 		}
 		else if (m_pCollider != nullptr)
 		{
-			Error("Object %s already has a collider.",m_sObjectName.c_str());
+			Error("Object %s already has a collider.", m_sObjectName.c_str());
 		}
 		else
 		{
@@ -180,12 +195,12 @@ namespace DavinciEngine{
 		}
 	}
 
-	Collider *Object::GetCollider() const
+	Collider* Object::GetCollider() const
 	{
 		return m_pCollider;
 	}
 
-	Collider* Object::Collide(const std::string &tag, CollisionData *collisionData)
+	Collider* Object::Collide(const std::string& tag, CollisionData* collisionData)
 	{
 		return Collision::GetInstance()->Collide(this, tag, collisionData);
 	}
@@ -235,7 +250,7 @@ namespace DavinciEngine{
 		return static_cast<int>(tags.size());
 	}
 
-	void Object::SaveTags(tinyxml2::XMLDocument *document)
+	void Object::SaveTags(tinyxml2::XMLDocument* document)
 	{
 		if (document)
 		{
@@ -254,7 +269,7 @@ namespace DavinciEngine{
 		else { FatalError("Object:SaveTags() - XMLDocument cannot be written to."); }
 	}
 
-	void Object::LoadTags(tinyxml2::XMLElement *element)
+	void Object::LoadTags(tinyxml2::XMLElement* element)
 	{
 		if (element)
 		{
@@ -271,9 +286,9 @@ namespace DavinciEngine{
 		else { FatalError("Object:LoadTags() - XMLElement cannot be loaded from."); }
 	}
 
-	void Object::CopyTags(const Object &other)
+	void Object::CopyTags(const Object& other)
 	{
-		for(int i = 0; i < static_cast<int>(other.tags.size()); i++)
+		for (int i = 0; i < static_cast<int>(other.tags.size()); i++)
 		{
 			this->tags.push_back(other.tags[i]);
 		}
@@ -284,7 +299,7 @@ namespace DavinciEngine{
 		// Virtual Function
 	}
 
-	void Object::LoadInputs(tinyxml2::XMLElement *element)
+	void Object::LoadInputs(tinyxml2::XMLElement* element)
 	{
 		if (element)
 		{

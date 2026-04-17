@@ -74,10 +74,10 @@ namespace DavinciEngine{
 			return new AIType(*m_mapAITypesIter->second);
 		}
 		else{
-			if(!m_bAILoaded && AI_Load("../data/ai/aitypes.xml")){
+			if(!m_bAILoaded && AI_Load("assets/ai/aitypes.xml")){
 				return AI_GetAIType(AITypeName);
 			}
-			Error("AITypes could not be loaded from ../data/ai/aitypes.xml.");
+			Error("AITypes could not be loaded from assets/ai/aitypes.xml.");
 			return nullptr;
 		}
 	}

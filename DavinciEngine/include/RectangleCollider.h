@@ -27,7 +27,7 @@ namespace DavinciEngine
 		/// <param name="height"> The height.</param>
 		/// <param name="offset"> (optional) the offset.</param>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		RectangleCollider(float width, float height, Vec2D offset=Vec2D::zero);
+		RectangleCollider(float width, float height, glm::vec2 offset=glm::vec2(0.0f, 0.0f));
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Copy constructor.</summary>
@@ -61,7 +61,7 @@ namespace DavinciEngine
 		///
 		/// <returns> true if it succeeds, false if it fails.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		bool IntersectsPoint(const Vec2D& point, CollisionData *collisionData = NULL);
+		bool IntersectsPoint(const glm::vec2& point, CollisionData *collisionData = NULL);
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Tests if the RectangleCollider intersects a line.</summary>
@@ -74,7 +74,7 @@ namespace DavinciEngine
 		///
 		/// <returns> true if it succeeds, false if it fails.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		bool IntersectsLine(const Vec2D& start, const Vec2D& end, float lineRadius = 0.0f, CollisionData *collisionData=NULL);
+		bool IntersectsLine(const glm::vec2& start, const glm::vec2& end, float lineRadius = 0.0f, CollisionData *collisionData=NULL);
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Gets the right-side x-coordinate of the RectangleCollider box.</summary>
@@ -119,7 +119,7 @@ namespace DavinciEngine
 		///
 		/// <returns> The top left.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		Vec2D GetTopLeft(bool relativeToEntity = false);
+		glm::vec2 GetTopLeft(bool relativeToEntity = false);
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Gets the top-right coordinate of the RectangleCollider box.</summary>
@@ -128,7 +128,7 @@ namespace DavinciEngine
 		///
 		/// <returns> The top right.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		Vec2D GetTopRight(bool relativeToEntity = false);
+		glm::vec2 GetTopRight(bool relativeToEntity = false);
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Gets the bottom-left coordinate of the RectangleCollider box.</summary>
@@ -137,7 +137,7 @@ namespace DavinciEngine
 		///
 		/// <returns> The bottom left.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		Vec2D GetBottomLeft(bool relativeToEntity = false);
+		glm::vec2 GetBottomLeft(bool relativeToEntity = false);
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Gets the bottom-right coordinate of the RectangleCollider box.</summary>
@@ -146,7 +146,7 @@ namespace DavinciEngine
 		///
 		/// <returns> The bottom right.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		Vec2D GetBottomRight(bool relativeToEntity = false);
+		glm::vec2 GetBottomRight(bool relativeToEntity = false);
 	};
 }
 #endif

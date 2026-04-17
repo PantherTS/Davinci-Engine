@@ -1,8 +1,8 @@
 #ifndef LUAMODULE_H
 #define LUAMODULE_H
 
-#include "LuaInterface.h"
-#include <LUA/lua.hpp>
+#include <lua.hpp>
+#include <sol/sol.hpp>
 
 namespace DavinciEngine{
 
@@ -29,7 +29,7 @@ namespace DavinciEngine{
 		///
 		/// <returns> null if it fails, else the lua state.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		lua_State* GetLuaState();
+		sol::state& GetLuaState();
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Executes the script operation.</summary>
@@ -52,11 +52,13 @@ namespace DavinciEngine{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		~LUAModule();
 
+		void BindEngine();
+
 		/// <summary> The pointer to the LUAModule class singleton </summary>
 		static LUAModule* m_pLUAModule;
 
 		/// <summary> The LUA state </summary>
-		lua_State* m_pLUAState;
+		sol::state m_LUAState;
 	};
 }
 #endif
