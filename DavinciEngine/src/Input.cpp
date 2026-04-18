@@ -76,33 +76,4 @@ bool Input::IsKeyHeld(const SDL_KeyboardEvent& KeyCode) const{
 
 void Input::OnEvent(){
 
-	/*CEGUI::System::getSingleton().getDefaultGUIContext().injectMousePosition(static_cast<float>(m_pFramework->m_v2dMousePosition.x), static_cast<float>(m_pFramework->m_v2dMousePosition.y));
-
-	if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonDown(CEGUI::LeftButton);
-	}
-	if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
-		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonUp(CEGUI::LeftButton);
-	}
-
-	if(IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)){
-		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonDown(CEGUI::RightButton);
-	}
-	if(IsMouseButtonReleased(MOUSE_BUTTON_RIGHT)){
-		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonUp(CEGUI::RightButton);
-	}
-
-	if(IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE)){
-		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonDown(CEGUI::MiddleButton);
-	}
-	if(IsMouseButtonReleased(MOUSE_BUTTON_MIDDLE)){
-		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseButtonUp(CEGUI::MiddleButton);
-	}
-
-	if(IsMouseButtonPressed(MOUSE_BUTTON_WHEELUP)){
-		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseWheelChange( +1 );
-	}
-	if(IsMouseButtonPressed(MOUSE_BUTTON_WHEELDOWN)){
-		CEGUI::System::getSingleton().getDefaultGUIContext().injectMouseWheelChange( -1 );
-	}*/
 }

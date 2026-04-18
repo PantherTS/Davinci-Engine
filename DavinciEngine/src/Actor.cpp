@@ -325,16 +325,17 @@ std::string Actor::CheckAttitude(const Actor *otherActor) const
 	}
 }
 
-void Actor::InputChecks(){
-	// If the Actor has no inputs then we don't want to waste our time here.
-	if(!inputs.empty() || m_pInput == nullptr){
-		if(m_pInput->IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-			// Implement if clicked on map or this or other object checks here.
-			if(HasTag("PLAYER")){
-				// Movement Routine
-				m_pSprite->m_sCurrentAction = inputs["MouseClickLeftMap"];
-				m_pSprite->MoveTo(m_pInput->GetMousePosition(),position);
-			}
+void Actor::InputChecks() {
+	if (inputs.empty() || m_pInput == nullptr) {
+		return;
+	}
+
+	if (m_pInput->IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		// Implement if clicked on map or this or other object checks here.
+		if (HasTag("PLAYER")) {
+			// Movement Routine
+			m_pSprite->m_sCurrentAction = inputs["MouseClickLeftMap"];
+			m_pSprite->MoveTo(m_pInput->GetMousePosition(), position);
 		}
 	}
 }

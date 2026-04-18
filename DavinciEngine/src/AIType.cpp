@@ -14,7 +14,7 @@ namespace DavinciEngine{
 	// CONSTRUCTORS
 	//////////////////////////////////////////////////////////////////////////
 
-	AIType::AIType() : m_fDetectRange(NULL),m_fFollowRange(NULL),m_fRoamRange(NULL) {}
+	AIType::AIType() {}
 
 	// Copy Constructor
 	AIType::AIType(const AIType& orig){

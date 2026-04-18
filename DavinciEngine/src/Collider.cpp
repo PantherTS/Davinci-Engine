@@ -11,7 +11,7 @@
 
 using namespace DavinciEngine;
 
-Collider::Collider() : m_pObject(NULL)
+Collider::Collider()
 {
 
 }

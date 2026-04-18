@@ -38,7 +38,7 @@ namespace DavinciEngine{
 		///
 		/// <param name="fileNode"> [in,out] If non-null, the FileNode * to save.</param>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		void Save(FileNode *fileNode);
+		void Save(FileNode *fileNode) const;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Loads the TextureAtlas information from file.</summary>
@@ -79,13 +79,13 @@ namespace DavinciEngine{
 		friend class TextureAtlas;
 
 		/// <summary> The name of this TextureAtlasEntry object </summary>
-		std::string name;
+		std::string name = std::string();
 
 		/// <summary> The coordinates, width, and height of the TextureAtlasEntry </summary>
-		int x, y, width, height;
+		int x = 0, y = 0, width = 0, height = 0;
 
 		/// <summary> A pointer to the TextureAtlas Object </summary>
-		TextureAtlas *textureAtlas;
+		TextureAtlas *textureAtlas = nullptr;
 	};
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -169,13 +169,13 @@ namespace DavinciEngine{
 		void RemoveReference();
 
 		/// <summary> The image name </summary>
-		std::string image;
+		std::string image = std::string();
 
 		/// <summary> The width and height </summary>
-		int width, height;
+		int width = 0, height = 0;
 
 		/// <summary> Number of references </summary>
-		int m_iRefCount;
+		int m_iRefCount = 0;
 
 	private:
 

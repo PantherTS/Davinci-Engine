@@ -2,6 +2,6 @@
 
 using namespace DavinciEngine;
 
-CollisionData::CollisionData() : penetration(0.0f)
+CollisionData::CollisionData()
 {
 }

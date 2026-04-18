@@ -117,7 +117,7 @@ Object& Scene::Duplicate(const std::string& objectType) {
 
 void Scene::Update() {
 
-	if (!Timer::GetInstance()->is_paused())
+	if (!Timer::GetInstance()->IsPaused())
 	{
 		//Update all the Scene Objects.
 		for (auto i = SceneObjects.begin(); i != SceneObjects.end(); ++i)

@@ -99,13 +99,13 @@ namespace DavinciEngine{
 		friend class Attributes;
 
 		/// <summary> Type of the attribute </summary>
-		AttributeType m_pAttribType;
+		AttributeType m_pAttribType = INVALID;
 
 		/// <summary> The pointer to the Attributes storage class </summary>
-		Attributes *m_pAttributes;
+		Attributes *m_pAttributes = nullptr;
 
 		/// <summary> Name of the Attribute </summary>
-		std::string m_sName;
+		std::string m_sName = std::string();
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Attributes can be int,char,floats, or double values. </summary>
@@ -115,7 +115,7 @@ namespace DavinciEngine{
 			char *m_pcValue;
 			float m_fValue;
 			double m_dValue;
-		} baseAttrib;
+		} baseAttrib = {};
 	};
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////

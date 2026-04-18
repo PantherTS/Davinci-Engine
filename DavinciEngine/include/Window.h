@@ -52,21 +52,21 @@ namespace DavinciEngine{
 		///
 		/// <returns> The height.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		const int GetHeight() {return m_iHeight;};
+		int GetHeight() const { return m_iHeight; };
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Gets the width.</summary>
 		///
 		/// <returns> The width.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		const int GetWidth() {return m_iWidth;};
+		int GetWidth() const { return m_iWidth; };
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Query if this object is fullscreen.</summary>
 		///
 		/// <returns> true if fullscreen, false if not.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		const bool IsFullscreen() {return m_bFullscreen;};
+		bool IsFullscreen() const { return m_bFullscreen; };
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Sets the coordinates for the center of the current window </summary>
@@ -76,7 +76,7 @@ namespace DavinciEngine{
 		void SetWindowCenter(const glm::vec2 center);
 
 		/// <summary> Retrieve the coordinates for the center of the current window </summary>
-		glm::vec2& GetWindowCenter() { return m_vec2WindowCenter; }
+		const glm::vec2& GetWindowCenter() const { return m_vec2WindowCenter; }
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Sets the scale for the current window </summary>
@@ -86,13 +86,13 @@ namespace DavinciEngine{
 		void SetWindowScale(const glm::vec2 scale);
 
 		/// <summary> Retrieve the current window scaling on the X and Y axes </summary>
-		glm::vec2 GetWindowScale() { return m_vec2ResolutionScale; }
+		const glm::vec2& GetWindowScale() const { return m_vec2ResolutionScale; }
 
 		/// <summary> The SDL surface inside the window </summary>
-		SDL_Window* m_pScreen;
+		SDL_Window* m_pScreen = nullptr;
 
 		/// <summary> The SDL OpenGL context </summary>
-		SDL_GLContext m_GLContext;
+		SDL_GLContext m_GLContext = nullptr;
 	
 	private:
 
@@ -128,31 +128,31 @@ namespace DavinciEngine{
 		bool OGLInit();
 		
 		/// <summary> Width of the window </summary>
-		int m_iWidth;
+		int m_iWidth = 0;
 
 		/// <summary> Height of the window </summary>
-		int m_iHeight;
+		int m_iHeight = 0;
 
 		/// <summary> Defines how many Bits Per Pixel the window is displaying </summary>
-		int m_iBpp;
+		int m_iBpp = 0;
 		
 		/// <summary> SDL/OpenGL window flags </summary>
-		Uint32 m_iFlags;
+		Uint32 m_iFlags = SDL_WINDOW_OPENGL;
 		
 		/// <summary> true to fullscreen </summary>
-		bool m_bFullscreen;
+		bool m_bFullscreen = false;
 
 		/// <summary> The window's title </summary>
-		std::string m_sTitle;
+		std::string m_sTitle = std::string();
 		
 		/// <summary> Container holding pointers to all Window objects. </summary>
 		//static std::list<Window*> m_Windows;
 
 		/// <summary> The resolution scale </summary>
-		glm::vec2 m_vec2ResolutionScale;
+		glm::vec2 m_vec2ResolutionScale = glm::vec2(0.0f);
 
 		/// <summary> The screen center coordinates </summary>
-		glm::vec2 m_vec2WindowCenter;
+		glm::vec2 m_vec2WindowCenter = glm::vec2(0.0f);
 
 	};
 }

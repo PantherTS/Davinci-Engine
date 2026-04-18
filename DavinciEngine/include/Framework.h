@@ -172,16 +172,16 @@ namespace DavinciEngine {
 		std::string GetDefaultContentPath() noexcept;
 
 		/// <summary> Array holding boolean values for the KeyCode keys </summary>
-		bool m_bKeys[KEY_MAX];
+		bool m_bKeys[KEY_MAX] = { false };
 
 		/// <summary> Array holding boolean values for the mouse buttons </summary>
-		bool m_bMouseButtons[MOUSE_BUTTON_MAX];
+		bool m_bMouseButtons[MOUSE_BUTTON_MAX] = { false };
 
 		/// <summary> The mouse coordinates </summary>
 		glm::vec2 m_v2dMousePosition = glm::vec2(0.0f);
 
 		/// <summary> The value of the mouse wheel </summary>
-		float m_fMouseWheel;
+		float m_fMouseWheel = 0.0f;
 
 	private:
 
@@ -200,7 +200,7 @@ namespace DavinciEngine {
 		//cCommandConsole *m_pCommandConsole;
 
 		/// <summary> The width and height of the display </summary>
-		int width, height;
+		int width = 0, height = 0;
 	};
 };
 #endif

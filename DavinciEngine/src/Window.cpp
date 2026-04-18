@@ -9,8 +9,7 @@ using namespace DavinciEngine;
 Window* Window::m_pWindow = nullptr;
 
 Window::Window(const std::string& title, int width, int height, int bpp, bool fullscreen) :
-	m_sTitle(title), m_iWidth(width), m_iHeight(height), m_iBpp(bpp), m_bFullscreen(fullscreen), m_iFlags(SDL_WINDOW_OPENGL)
-	, m_pScreen(nullptr), m_GLContext(nullptr)
+	m_sTitle(title), m_iWidth(width), m_iHeight(height), m_iBpp(bpp), m_bFullscreen(fullscreen)
 {}
 
 Window::~Window()
@@ -20,6 +19,7 @@ void Window::Destroy()
 {
 	// Delete the window object
 	delete m_pWindow;
+	m_pWindow = nullptr;
 	SDL_Quit();
 }
 

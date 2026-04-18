@@ -18,15 +18,15 @@ namespace DavinciEngine
 		CollisionData();
 
 		/// <summary> The position where the collision occurred </summary>
-		glm::vec2 hitPoint;
+		glm::vec2 hitPoint = glm::vec2(0.0f);
 
 		/// <summary> The normal of the collision </summary>
-		glm::vec2 normal;
+		glm::vec2 normal = glm::vec2(0.0f);
 
 		/// <summary> The penetration of the collider (how far into the collider we've moved) </summary>
-		float penetration;
+		float penetration = 0.0f;
 		
 		/// <summary> The collider that was hit </summary>
-		Collider *collider;
+		Collider *collider = nullptr;
 	};
 }

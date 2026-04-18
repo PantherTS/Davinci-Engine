@@ -9,7 +9,7 @@
 
 using namespace DavinciEngine;
 
-UIControl::UIControl() : Transform(), m_pInput(nullptr), m_pGraphic(nullptr), m_bIsEnabled(false)
+UIControl::UIControl() : Transform()
 {
 }
 
@@ -55,7 +55,7 @@ void UIControl::InputChecks()
 	// Virtual function
 }
 
-const bool UIControl::IsEnabled()
+const bool UIControl::IsEnabled() const
 {
 	return this->m_bIsEnabled;
 }

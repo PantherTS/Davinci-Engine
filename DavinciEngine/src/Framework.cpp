@@ -64,8 +64,8 @@ void Framework::Update() {
 	float y = 0;
 
 	SDL_GetMouseState(&x, &y);
-	m_v2dMousePosition.x = static_cast<float>(x);
-	m_v2dMousePosition.y = static_cast<float>(y);
+	m_v2dMousePosition.x = x;
+	m_v2dMousePosition.y = y;
 
 	Uint8 uiMouseState = SDL_GetRelativeMouseState(nullptr, nullptr);
 
@@ -81,12 +81,12 @@ void Framework::Update() {
 	{
 	case SDL_EVENT_WINDOW_FOCUS_GAINED: {
 		// We've regained focus of the game window so we unpause the engine.
-		Timer::GetInstance()->unpause();
+		Timer::GetInstance()->Unpause();
 		break;
 	}
 	case SDL_EVENT_WINDOW_FOCUS_LOST: {
 		// We've lost focus of the game window so we pause the engine.
-		Timer::GetInstance()->pause();
+		Timer::GetInstance()->Pause();
 		break;
 	}
 	case SDL_EVENT_QUIT: {

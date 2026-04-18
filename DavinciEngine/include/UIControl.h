@@ -42,20 +42,20 @@ namespace DavinciEngine {
 		///
 		/// <returns> true if enabled, false if not.</returns>
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		const bool IsEnabled();
+		const bool IsEnabled() const;
 
 		/// <summary>  Object's pointer to the Input system for event detection at the Object level </summary>
-		Input* m_pInput;
+		Input* m_pInput = nullptr;
 
 		///<summary> The storage container for the possible inputs this UI Control can take. </summary>
 		std::map<std::string, std::string> m_mapInputs;
 
 	private:
-		Graphic* m_pGraphic;
+		Graphic* m_pGraphic = nullptr;
 
-		glm::vec2 position;
+		glm::vec2 position = glm::vec2(0.0f);
 
-		bool m_bIsEnabled;
+		bool m_bIsEnabled = false;
 	};
 };
 #endif

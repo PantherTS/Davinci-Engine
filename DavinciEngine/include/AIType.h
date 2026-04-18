@@ -48,25 +48,24 @@ namespace DavinciEngine {
 		static AIType* AI_GetAIType(const std::string &AITypeName);
 
 		/// <summary> The attitude to player </summary>
-		std::string m_sAttitudeToPlayer;
+		std::string m_sAttitudeToPlayer = std::string();
 
 		/// <summary> The attitude to family </summary>
-		std::string m_sAttitudeToFamily;
+		std::string m_sAttitudeToFamily = std::string();
 
 		/// <summary> The attitude to others </summary>
-		std::string m_sAttitudeToOthers;
+		std::string m_sAttitudeToOthers = std::string();
 
 		/// <summary> The detect range </summary>
-		float m_fDetectRange;
+		float m_fDetectRange = 0.0f;
 
 		/// <summary> The follow range </summary>
-		float m_fFollowRange;
+		float m_fFollowRange = 0.0f;
 
 		/// <summary> The roam range </summary>
-		float m_fRoamRange;
-
+		float m_fRoamRange = 0.0f;
 		/// <summary> Name of the AI type </summary>
-		std::string m_sName;
+		std::string m_sName = std::string();
 
 	private:
 

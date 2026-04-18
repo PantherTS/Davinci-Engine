@@ -5,12 +5,11 @@
 using namespace DavinciEngine;
 
 TextureAtlasEntry::TextureAtlasEntry()
-	: textureAtlas(nullptr), x(0), y(0), width(0), height(0)
 {
 }
 
 TextureAtlasEntry::TextureAtlasEntry(TextureAtlas *textureAtlas)
-	: textureAtlas(textureAtlas), x(0), y(0), width(0), height(0)
+	: textureAtlas(textureAtlas)
 {
 }
 
@@ -34,7 +33,7 @@ glm::vec2 TextureAtlasEntry::GetTextureScale()
 	return glm::vec2(width/static_cast<float>(textureAtlas->width), height/static_cast<float>(textureAtlas->height));
 }
 
-void TextureAtlasEntry::Save(FileNode *fileNode)
+void TextureAtlasEntry::Save(FileNode *fileNode) const
 {
 	fileNode->Write("name", name);
 	std::ostringstream os;

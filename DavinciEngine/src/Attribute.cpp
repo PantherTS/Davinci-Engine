@@ -3,7 +3,7 @@
 
 using namespace DavinciEngine;
 
-Attribute::Attribute() : m_pAttributes(nullptr), m_pAttribType(INVALID), m_sName("")
+Attribute::Attribute()
 {
 
 }

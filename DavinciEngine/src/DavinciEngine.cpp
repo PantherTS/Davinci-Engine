@@ -54,7 +54,7 @@ void Davinci::Engine_Destroy()
 	m_pLUAModule->Destroy();
 	m_pModeManager->Destroy();
 	m_pXMLSettings->Destroy();
-	m_pTimer->Destroy();
+	//m_pTimer->Destroy();
 	m_pAssetManager->Destroy();
 	Log("Engine Resources Have Been Unloaded Successfully. Goodbye!");
 	m_pFramework->Destroy();
@@ -128,7 +128,7 @@ bool Davinci::Engine_Init()
 ************************************************************/
 void Davinci::TimerStart()
 {
-	m_pTimer->start();
+	m_pTimer->Start();
 }
 
 /************************************************************
@@ -139,7 +139,7 @@ void Davinci::TimerStart()
 void Davinci::TimerPause()
 {
 	Log("Game Timer Paused.");
-	m_pTimer->pause();
+	m_pTimer->Pause();
 }
 
 /************************************************************
@@ -225,12 +225,12 @@ void Davinci::Engine_FatalError(const char *fatal_error)
 void Davinci::SetResolution(int windowWidth, int windowHeight)
 {
 	Log("Switching Resolution to %d x %d.",windowWidth,windowHeight);
-	m_pTimer->pause();
+	m_pTimer->Pause();
 	m_pGUI->GUI_GrabTextures();
 	m_pWindow->SetSize(windowWidth,windowHeight,m_pXMLSettings->GetFS());
 	m_pGUI->GUI_RestoreTextures();
 	m_pGUI->GUI_SetDisplaySize(windowWidth, windowHeight);
-	m_pTimer->unpause();
+	m_pTimer->Unpause();
 }
 
 void Davinci::SetFullscreen(bool fullscreen)
@@ -240,12 +240,12 @@ void Davinci::SetFullscreen(bool fullscreen)
 	else
 		Log("Switching to Windowed Mode.");
 
-	m_pTimer->pause();
+	m_pTimer->Pause();
 	m_pGUI->GUI_GrabTextures();
 	m_pWindow->SetSize(m_pXMLSettings->GetWidth(),m_pXMLSettings->GetHeight(),fullscreen);
 	m_pGUI->GUI_RestoreTextures();
 	m_pGUI->GUI_SetDisplaySize(m_pXMLSettings->GetWidth(),m_pXMLSettings->GetHeight());
-	m_pTimer->unpause();
+	m_pTimer->Unpause();
 }
 
 bool Davinci::IsFullscreen()

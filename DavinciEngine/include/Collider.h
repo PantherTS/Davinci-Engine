@@ -80,7 +80,7 @@ namespace DavinciEngine{
 		glm::vec2 GetObjectPosition();
 
 		/// <summary> The offset of the collider object </summary>
-		glm::vec2 offset;
+		glm::vec2 offset = glm::vec2(0.0f);
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Makes a deep copy of this object.</summary>
@@ -127,7 +127,7 @@ namespace DavinciEngine{
 	private:
 
 		/// <summary> Pointer to the collider's associated Object </summary>
-		Object *m_pObject;
+		Object *m_pObject = nullptr;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// <summary> Tests if two rectangles have collided and sets a CollisionData object with

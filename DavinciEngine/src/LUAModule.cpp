@@ -8,7 +8,7 @@ LUAModule* LUAModule::m_pLUAModule = nullptr;
 
 LUAModule::LUAModule()
 {
-	// Create the LUA state and connect to tolua
+	// Create the LUA state and connect to sol
 	m_LUAState.open_libraries(sol::lib::base,
 		sol::lib::package,
 		sol::lib::string,
@@ -17,7 +17,6 @@ LUAModule::LUAModule()
 		sol::lib::os,
 		sol::lib::debug);
 
-	// Load LUA standard libraries for functionality
 	BindEngine();
 }
 

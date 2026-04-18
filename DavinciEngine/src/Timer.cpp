@@ -27,14 +27,14 @@ Timer::Timer()
 
 Timer::~Timer()
 {
-
+	this->Destroy();
 }
 
 Timer *Timer::GetInstance ( void )
 {
 	if (!m_Timer) {
 		m_Timer = new Timer();
-		m_Timer->start();
+		m_Timer->Start();
 	}
 
 	return m_Timer;
@@ -48,7 +48,7 @@ void Timer::Destroy()
 	}
 }
 
-void Timer::start()
+void Timer::Start()
 {
 	//Start the timer
 	started = true;
@@ -61,7 +61,7 @@ void Timer::start()
 	startTicks = GetTicks();
 }
 
-void Timer::stop()
+void Timer::Stop()
 {
 	//Stop the timer
 	started = false;
@@ -93,7 +93,7 @@ void Timer::Update(){
 	}
 }
 
-long Timer::GetTicks()
+long Timer::GetTicks() const
 {
 	//If the timer is running
 	if( started == true )
@@ -127,7 +127,7 @@ void Timer::SetPreviousTicks()
 	previousTicks = currentTicks;
 }
 
-void Timer::pause()
+void Timer::Pause()
 {
 	//If the timer is running and isn't already paused
 	if( ( started == true ) && ( paused == false ) )
@@ -139,7 +139,7 @@ void Timer::pause()
 	}
 }
 
-void Timer::unpause()
+void Timer::Unpause()
 {
 	//If the timer is paused
 	if( paused == true )
@@ -156,12 +156,12 @@ void Timer::unpause()
 	}
 }
 
-bool Timer::is_started()
+bool Timer::IsStarted() const
 {
 	return started;
 }
 
-bool Timer::is_paused()
+bool Timer::IsPaused() const
 {
 	return paused;
 }
